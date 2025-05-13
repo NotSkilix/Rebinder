@@ -1,6 +1,6 @@
 import keyboard
 
-from widgets import *
+from main_widget import *
 
 keyToRebind = 'a'
 rebindedValue = 'b'

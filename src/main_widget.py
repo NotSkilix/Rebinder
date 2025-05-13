@@ -2,14 +2,17 @@ import keyboard
 import sys
 
 from PySide6 import QtCore, QtWidgets, QtGui
+from type_def import PopupTypes
 
 class MainWidget(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
 
-        # Widget settings
-        self.setWindowTitle("Rebinder V0.1")
+        # Window settings
+        self.setWindowTitle("Rebinder V0.2")
         self.setFixedWidth(400)  # Adjust the width as needed
+        self.setFixedHeight(400)
+        self.setStyleSheet("background-color: #0c0c0b;")
 
         # Generic widget text
         title = QtWidgets.QLabel("Rebinder", alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
@@ -87,15 +90,13 @@ class MainWidget(QtWidgets.QWidget):
             elif self.keyToRebindField.text() == self.stopRebindingKey.text():
                 raise ValueError("It is not possible to bind the 'stop rebinding' key to the rebinded key")
         except ValueError as e:
-            print("Error on button click, one or more fields must be empty or have a the same keybind: ",  file=sys.stderr)
-            print("     ",e,file=sys.stderr)
+            self.createAndShowPopup(PopupTypes.Error, "Error on button click, one or more fields must be empty or have a the same keybind:",e)
             return
 
         try:
             self.remap = keyboard.remap_key(self.keyToRebindField.text(), self.newKeyBindField.text())
         except ValueError as e:
-            print("Error on button click, one of the keybind but be incorrect/inexistant: ",  file=sys.stderr)
-            print("     ",e,file=sys.stderr)
+            self.createAndShowPopup(PopupTypes.Error, "Error on button click, one of the keybind must be incorrect/inexistant:",e)
             return
 
         self.keyToRebindField.setDisabled(True)
@@ -114,10 +115,13 @@ class MainWidget(QtWidgets.QWidget):
         self.window().showMinimized()
 
     """
+    
     This function is called when the "stop rebinding" key is pressed
     
     It unbind itself and unbind the remapping (rebinding)
     Enable back the elements that were disabled before and show back the window if it is minimized
+    
+    Event is set to None by default because it is not required when the stop button is clicked
     """
     def unbindKeys(self, event=None):
         try:
@@ -134,3 +138,33 @@ class MainWidget(QtWidgets.QWidget):
 
         if self.window().isMinimized():
             self.window().showNormal()
+
+
+    """
+    This function is called when the "stop rebinding" key is pressed
+    
+    It creates a popup with the error message and shows it to the user
+    :param type The type of popup (error, info, etc...)
+    :param title The title label of the popup
+    :param content The thrown error
+    """
+    def createAndShowPopup(self, type, title, content : ValueError):
+        popup = QtWidgets.QDialog(self)
+
+        if type == PopupTypes.Error:
+            popup.setWindowTitle("Error")
+
+        titleLabel = QtWidgets.QLabel(title)
+        titleLabel.setFont(QtGui.QFont("Arial", 14))
+
+        content = "        " + str(content)
+        contentLabel = QtWidgets.QLabel(content)
+        contentLabel.setFont(QtGui.QFont("Arial", 11))
+
+        layout = QtWidgets.QVBoxLayout()
+        layout.addWidget(titleLabel)
+        layout.addWidget(contentLabel)
+
+        popup.setLayout(layout)
+
+        popup.show()
