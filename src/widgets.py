@@ -84,6 +84,11 @@ class MainWidget(QtWidgets.QWidget):
             print("     ",e,file=sys.stderr)
             return
 
+        self.keyToRebindField.setDisabled(True)
+        self.newKeyBindField.setDisabled(True)
+        self.stopRebindingKey.setDisabled(True)
+        self.rebindButton.setDisabled(True)
+
         try:
             self.stopHotkeyEvent = keyboard.hook_key(self.stopRebindingKey.text(),self.unbindKeys, suppress=True)
         except ValueError as e:
@@ -102,5 +107,11 @@ class MainWidget(QtWidgets.QWidget):
     def unbindKeys(self, event=None):
         keyboard.unhook_key(self.stopHotkeyEvent)
         keyboard.unremap_key(self.remap)
+
+        self.keyToRebindField.setDisabled(False)
+        self.newKeyBindField.setDisabled(False)
+        self.stopRebindingKey.setDisabled(False)
+        self.rebindButton.setDisabled(False)
+
         if self.window().isMinimized():
             self.window().showNormal()
