@@ -18,7 +18,7 @@ class MainWidget(QtWidgets.QWidget):
 
         # keyToRebind layout & elements
         keyToRebindText = QtWidgets.QLabel("Write a key to rebind (a, F3,...): ")
-        self.keyToRebindField = QtWidgets.QLineEdit(maxLength=5, placeholderText="Key to rebind...") #TODO: Look if 5 char is enough for all keybinds
+        self.keyToRebindField = QtWidgets.QLineEdit(maxLength=6, placeholderText="Key to rebind...")
 
         keyToRebinLayout = QtWidgets.QHBoxLayout()
         keyToRebinLayout.addWidget(keyToRebindText)
@@ -26,7 +26,7 @@ class MainWidget(QtWidgets.QWidget):
 
         # NewKeyBind layout & elements
         newKeyBindText = QtWidgets.QLabel("Write the new keybind (b, F4,...): ")
-        self.newKeyBindField = QtWidgets.QLineEdit(maxLength=5, placeholderText="New bind...") #TODO: Look if 5 char is enough for all keybinds
+        self.newKeyBindField = QtWidgets.QLineEdit(maxLength=6, placeholderText="New bind...")
 
         newKeyBindLayout = QtWidgets.QHBoxLayout()
         newKeyBindLayout.addWidget(newKeyBindText)
@@ -34,7 +34,7 @@ class MainWidget(QtWidgets.QWidget):
 
         # StopRebinding layout & elements
         stopRebindingText = QtWidgets.QLabel("The keybind to stop the rebinding: ")
-        self.stopRebindingKey = QtWidgets.QLineEdit(maxLength=5, placeholderText="Stop rebinding key...") #TODO: Look if 5 char is enough for all keybinds
+        self.stopRebindingKey = QtWidgets.QLineEdit(maxLength=6, placeholderText="Stop rebinding key...")
 
         stopRebindingLayout = QtWidgets.QHBoxLayout()
         stopRebindingLayout.addWidget(stopRebindingText)
@@ -108,10 +108,15 @@ class MainWidget(QtWidgets.QWidget):
     This function is called when the "stop rebinding" key is pressed
     
     It unbind itself and unbind the remapping (rebinding)
+    Enable back the elements that were disabled before and show back the window if it is minimized
     """
     def unbindKeys(self, event=None):
-        keyboard.unhook_key(self.stopHotkeyEvent)
-        keyboard.unremap_key(self.remap)
+        try:
+            keyboard.unremap_key(self.remap)
+            keyboard.unhook_key(self.stopHotkeyEvent)
+        except KeyError as e:
+            print("Error while trying to unhook the keybinds:", file=sys.stderr)
+            print("     ", e, file=sys.stderr)
 
         self.keyToRebindField.setDisabled(False)
         self.newKeyBindField.setDisabled(False)
