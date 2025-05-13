@@ -16,21 +16,29 @@ class MainWidget(QtWidgets.QWidget):
         bottom = QtWidgets.QLabel("Made with ❤ by NotSkilix", alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
         bottom.setFont(QtGui.QFont("Arial", 11))
 
-        # keyToRebind layout & text
-        keyToRebindText = QtWidgets.QLabel("Write a key to rebind (a, F3,...):")
+        # keyToRebind layout & elements
+        keyToRebindText = QtWidgets.QLabel("Write a key to rebind (a, F3,...): ")
         self.keyToRebindField = QtWidgets.QLineEdit(maxLength=5, placeholderText="Key to rebind...") #TODO: Look if 5 char is enough for all keybinds
 
         keyToRebinLayout = QtWidgets.QHBoxLayout()
         keyToRebinLayout.addWidget(keyToRebindText)
         keyToRebinLayout.addWidget(self.keyToRebindField)
 
-        # NewKeyBind layout & text
-        NewKeyBindText = QtWidgets.QLabel("Write the new keybind (b, F4,...):")
+        # NewKeyBind layout & elements
+        newKeyBindText = QtWidgets.QLabel("Write the new keybind (b, F4,...): ")
         self.newKeyBindField = QtWidgets.QLineEdit(maxLength=5, placeholderText="New bind...") #TODO: Look if 5 char is enough for all keybinds
 
-        NewKeyBindLayout = QtWidgets.QHBoxLayout()
-        NewKeyBindLayout.addWidget(NewKeyBindText)
-        NewKeyBindLayout.addWidget(self.newKeyBindField)
+        newKeyBindLayout = QtWidgets.QHBoxLayout()
+        newKeyBindLayout.addWidget(newKeyBindText)
+        newKeyBindLayout.addWidget(self.newKeyBindField)
+
+        # StopRebinding layout & elements
+        stopRebindingText = QtWidgets.QLabel("The keybind to stop the rebinding: ")
+        self.stopRebindingKey = QtWidgets.QLineEdit(maxLength=5, placeholderText="Stop rebinding key...") #TODO: Look if 5 char is enough for all keybinds
+
+        stopRebindingLayout = QtWidgets.QHBoxLayout()
+        stopRebindingLayout.addWidget(stopRebindingText)
+        stopRebindingLayout.addWidget(self.stopRebindingKey)
 
         # Rebind Button
         self.rebindButton = QtWidgets.QPushButton("Rebind")
@@ -39,7 +47,8 @@ class MainWidget(QtWidgets.QWidget):
         mainLayout = QtWidgets.QVBoxLayout(self)
         mainLayout.addWidget(title)
         mainLayout.addLayout(keyToRebinLayout)
-        mainLayout.addLayout(NewKeyBindLayout)
+        mainLayout.addLayout(newKeyBindLayout)
+        mainLayout.addLayout(stopRebindingLayout)
         mainLayout.addWidget(self.rebindButton)
         mainLayout.addWidget(bottom)
 
@@ -66,9 +75,25 @@ class MainWidget(QtWidgets.QWidget):
             return
 
         try:
-            keyboard.remap_key(self.keyToRebindField.text(), self.newKeyBindField.text())
-            self.window().showMinimized()
+            self.remap = keyboard.remap_key(self.keyToRebindField.text(), self.newKeyBindField.text())
         except ValueError as e:
             print("Error on button click, one of the keybind but be incorrect/inexistant: ",  file=sys.stderr)
             print("     ",e,file=sys.stderr)
             return
+
+        try:
+            self.stopHotkeyEvent = keyboard.hook_key(self.stopRebindingKey.text(),self.unbindKeys, suppress=True)
+        except ValueError as e:
+            print("Error on button click, the keybind to stop the rebinding doesn't exist: ",  file=sys.stderr)
+            print("     ",e,file=sys.stderr)
+
+        self.window().showMinimized()
+
+    """
+    This function is called when the "stop rebinding" key is pressed
+    
+    It unbind itself and unbind the remapping (rebinding)
+    """
+    def unbindKeys(self, event):
+        keyboard.unhook_key(self.stopHotkeyEvent)
+        keyboard.unremap_key(self.remap)
