@@ -64,8 +64,10 @@ class MainWidget(QtWidgets.QWidget):
             print("Error on button click, one or more fields must be empty: ",  file=sys.stderr)
             print("     ",e,file=sys.stderr)
             return
+
         try:
             keyboard.remap_key(self.keyToRebindField.text(), self.newKeyBindField.text())
+            self.window().showMinimized()
         except ValueError as e:
             print("Error on button click, one of the keybind but be incorrect/inexistant: ",  file=sys.stderr)
             print("     ",e,file=sys.stderr)
