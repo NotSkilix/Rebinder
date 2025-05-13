@@ -9,6 +9,7 @@ class MainWidget(QtWidgets.QWidget):
 
         # Widget settings
         self.setWindowTitle("Rebinder V0.1")
+        self.setFixedWidth(400)  # Adjust the width as needed
 
         # Generic widget text
         title = QtWidgets.QLabel("Rebinder", alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
@@ -47,13 +48,15 @@ class MainWidget(QtWidgets.QWidget):
 
         # 'Build' the widget
         mainLayout = QtWidgets.QVBoxLayout(self)
-        mainLayout.addWidget(title)
+
+        mainLayout.addWidget(title, alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+        mainLayout.addSpacing(20)
         mainLayout.addLayout(keyToRebinLayout)
+        mainLayout.addSpacing(10)
         mainLayout.addLayout(newKeyBindLayout)
+        mainLayout.addSpacing(10)
         mainLayout.addLayout(stopRebindingLayout)
-        mainLayout.addWidget(self.rebindButton)
-        mainLayout.addWidget(self.stopRebindButton)
-        mainLayout.addWidget(bottom)
+        mainLayout.addSpacing(20)
 
         # Add listeners
         self.rebindButton.clicked.connect(self.onRebindButtonClick)
