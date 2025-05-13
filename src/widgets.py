@@ -57,6 +57,12 @@ class MainWidget(QtWidgets.QWidget):
         mainLayout.addSpacing(10)
         mainLayout.addLayout(stopRebindingLayout)
         mainLayout.addSpacing(20)
+        buttonLayout = QtWidgets.QHBoxLayout()
+        buttonLayout.addWidget(self.rebindButton)
+        buttonLayout.addWidget(self.stopRebindButton)
+        mainLayout.addLayout(buttonLayout)
+        mainLayout.addSpacing(30)
+        mainLayout.addWidget(bottom, alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
 
         # Add listeners
         self.rebindButton.clicked.connect(self.onRebindButtonClick)
