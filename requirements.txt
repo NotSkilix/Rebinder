@@ -1,0 +1,4 @@
+pyside6
+pyside6_Addons
+pyside6_essentials
+keyboard

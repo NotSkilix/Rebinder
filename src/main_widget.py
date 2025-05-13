@@ -94,7 +94,8 @@ class MainWidget(QtWidgets.QWidget):
             return
 
         try:
-            self.remap = keyboard.remap_key(self.keyToRebindField.text(), self.newKeyBindField.text())
+            if self.stopRebindingKey != "":
+                self.remap = keyboard.remap_key(self.keyToRebindField.text(), self.newKeyBindField.text())
         except ValueError as e:
             self.createAndShowPopup(PopupTypes.Error, "Error on button click, one of the keybind must be incorrect/inexistant:",e)
             return
@@ -107,8 +108,9 @@ class MainWidget(QtWidgets.QWidget):
         try:
             self.stopHotkeyEvent = keyboard.hook_key(self.stopRebindingKey.text(),self.unbindKeys, suppress=True)
         except ValueError as e:
-            print("Error on button click, the keybind to stop the rebinding doesn't exist: ",  file=sys.stderr)
-            print("     ",e,file=sys.stderr)
+            if e == "Can only normalize non-empty string names. Unexpected ''":
+                self.createAndShowPopup(PopupTypes.Error, "Error on button click, the keybind to stop the rebinding is empty:",e)
+                return
 
         self.stopRebindButton.setDisabled(False)
         self.stopRebindButton.clicked.connect(self.unbindKeys)
@@ -124,12 +126,11 @@ class MainWidget(QtWidgets.QWidget):
     Event is set to None by default because it is not required when the stop button is clicked
     """
     def unbindKeys(self, event=None):
-        try:
-            keyboard.unremap_key(self.remap)
+        if hasattr(self, 'stopHotkeyEvent'):
             keyboard.unhook_key(self.stopHotkeyEvent)
-        except KeyError as e:
-            print("Error while trying to unhook the keybinds:", file=sys.stderr)
-            print("     ", e, file=sys.stderr)
+            del self.stopHotkeyEvent
+
+        keyboard.unhook(self.remap)
 
         self.keyToRebindField.setDisabled(False)
         self.newKeyBindField.setDisabled(False)
