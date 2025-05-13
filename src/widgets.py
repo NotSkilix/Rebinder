@@ -40,8 +40,10 @@ class MainWidget(QtWidgets.QWidget):
         stopRebindingLayout.addWidget(stopRebindingText)
         stopRebindingLayout.addWidget(self.stopRebindingKey)
 
-        # Rebind Button
+        # Buttons
         self.rebindButton = QtWidgets.QPushButton("Rebind")
+        self.stopRebindButton = QtWidgets.QPushButton("Stop")
+        self.stopRebindButton.setDisabled(True)
 
         # 'Build' the widget
         mainLayout = QtWidgets.QVBoxLayout(self)
@@ -50,6 +52,7 @@ class MainWidget(QtWidgets.QWidget):
         mainLayout.addLayout(newKeyBindLayout)
         mainLayout.addLayout(stopRebindingLayout)
         mainLayout.addWidget(self.rebindButton)
+        mainLayout.addWidget(self.stopRebindButton)
         mainLayout.addWidget(bottom)
 
         # Add listeners
@@ -87,6 +90,8 @@ class MainWidget(QtWidgets.QWidget):
             print("Error on button click, the keybind to stop the rebinding doesn't exist: ",  file=sys.stderr)
             print("     ",e,file=sys.stderr)
 
+        self.stopRebindButton.setDisabled(False)
+        self.stopRebindButton.clicked.connect(self.unbindKeys)
         self.window().showMinimized()
 
     """
@@ -94,6 +99,8 @@ class MainWidget(QtWidgets.QWidget):
     
     It unbind itself and unbind the remapping (rebinding)
     """
-    def unbindKeys(self, event):
+    def unbindKeys(self, event=None):
         keyboard.unhook_key(self.stopHotkeyEvent)
         keyboard.unremap_key(self.remap)
+        if self.window().isMinimized():
+            self.window().showNormal()
