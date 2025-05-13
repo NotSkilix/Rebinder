@@ -72,8 +72,13 @@ class MainWidget(QtWidgets.QWidget):
                 raise ValueError("The new keybind field must not be empty when rebinding")
             elif self.keyToRebindField.text() == "":
                 raise ValueError("The key to rebind must not be empty when rebinding")
+
+            if self.newKeyBindField.text() ==  self.keyToRebindField.text():
+                raise ValueError("You can't rebind a key to itself")
+            elif self.keyToRebindField.text() == self.stopRebindingKey.text():
+                raise ValueError("It is not possible to bind the 'stop rebinding' key to the rebinded key")
         except ValueError as e:
-            print("Error on button click, one or more fields must be empty: ",  file=sys.stderr)
+            print("Error on button click, one or more fields must be empty or have a the same keybind: ",  file=sys.stderr)
             print("     ",e,file=sys.stderr)
             return
 
