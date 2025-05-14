@@ -1,4 +1,4 @@
-from main_widget import MainWidget, QtWidgets, sys
+from src.script.main_widget import MainWidget, QtWidgets, sys
 
 def main():
     print("Executing...")
