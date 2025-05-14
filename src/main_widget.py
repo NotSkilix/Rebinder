@@ -129,11 +129,16 @@ class MainWidget(QtWidgets.QWidget):
             keyboard.unhook_key(self.stopHotkeyEvent)
             del self.stopHotkeyEvent
 
-        keyboard.unhook(self.remap)
+        try:
+            keyboard.unhook(self.remap)
+            del self.remap
+        except Exception as e:
+            print(e, file=sys.stderr)
 
         self.keyToRebindField.setDisabled(False)
         self.newKeyBindField.setDisabled(False)
         self.rebindButton.setDisabled(False)
+        self.stopRebindingKey.setDisabled(False)
         self.stopRebindButton.setDisabled(True)
         self.stopRebindButton.setStyleSheet("QPushButton:disabled:hover { background-color: none; }")
         self.stopRebindButton.clicked.disconnect()
