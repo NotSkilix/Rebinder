@@ -45,7 +45,7 @@ class MainWidget(QtWidgets.QWidget):
         stopRebindingLayout.addWidget(self.stopRebindingKey)
 
         # Buttons
-        self.rebindButton = QtWidgets.QPushButton("Rebind")
+        self.rebindButton = QtWidgets.QPushButton("Play")
         self.stopRebindButton = QtWidgets.QPushButton("Stop")
         self.stopRebindButton.setDisabled(True)
 
