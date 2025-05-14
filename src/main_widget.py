@@ -100,11 +100,6 @@ class MainWidget(QtWidgets.QWidget):
             self.createAndShowPopup(PopupTypes.Error, "Error on button click, one of the keybind must be incorrect/inexistant:",e)
             return
 
-        self.keyToRebindField.setDisabled(True)
-        self.newKeyBindField.setDisabled(True)
-        self.stopRebindingKey.setDisabled(True)
-        self.rebindButton.setDisabled(True)
-
         try:
             self.stopHotkeyEvent = keyboard.hook_key(self.stopRebindingKey.text(),self.unbindKeys, suppress=True)
         except ValueError as e:
@@ -112,8 +107,12 @@ class MainWidget(QtWidgets.QWidget):
                 self.createAndShowPopup(PopupTypes.Error, "Error on button click, the keybind to stop the rebinding is empty:",e)
                 return
 
+        self.keyToRebindField.setDisabled(True)
+        self.newKeyBindField.setDisabled(True)
+        self.rebindButton.setDisabled(True)
         self.stopRebindButton.setDisabled(False)
         self.stopRebindButton.clicked.connect(self.unbindKeys)
+
         self.window().showMinimized()
 
     """
@@ -134,8 +133,10 @@ class MainWidget(QtWidgets.QWidget):
 
         self.keyToRebindField.setDisabled(False)
         self.newKeyBindField.setDisabled(False)
-        self.stopRebindingKey.setDisabled(False)
         self.rebindButton.setDisabled(False)
+        self.stopRebindButton.setDisabled(True)
+        self.stopRebindButton.setStyleSheet("QPushButton:disabled:hover { background-color: none; }")
+        self.stopRebindButton.clicked.disconnect()
 
         if self.window().isMinimized():
             self.window().showNormal()
