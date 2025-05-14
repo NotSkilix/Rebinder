@@ -2,7 +2,7 @@ import keyboard
 import sys
 
 from PySide6 import QtCore, QtWidgets, QtGui
-from type_def import PopupTypes
+from .type_def import PopupTypes
 
 class MainWidget(QtWidgets.QWidget):
     def __init__(self):
@@ -78,19 +78,22 @@ class MainWidget(QtWidgets.QWidget):
     """
     def onRebindButtonClick(self):
         try:
-            if self.newKeyBindField.text() == "" and self.keyToRebindField.text() == "":
-                raise ValueError("Both fields must contain a value in order to rebind the keys")
-            elif self.newKeyBindField.text() == "":
-                raise ValueError("The new keybind field must not be empty when rebinding")
+            if self.keyToRebindField.text() == "" and self.newKeyBindField.text() == "":
+                raise ValueError("The keybinds have been left empty")
             elif self.keyToRebindField.text() == "":
-                raise ValueError("The key to rebind must not be empty when rebinding")
+                raise ValueError("The key to rebind has been left empty")
+            elif self.newKeyBindField.text() == "":
+                raise ValueError("The new keybind has been left empty")
 
-            if self.newKeyBindField.text() ==  self.keyToRebindField.text():
-                raise ValueError("You can't rebind a key to itself")
+            if self.keyToRebindField.text() == self.newKeyBindField.text() == self.stopRebindingKey.text():
+                raise ValueError("Impossible to bind every keybinds to the same one")
+            elif self.keyToRebindField.text() == self.newKeyBindField.text():
+                raise ValueError("Impossible to rebind the old key to the itself")
             elif self.keyToRebindField.text() == self.stopRebindingKey.text():
-                raise ValueError("It is not possible to bind the 'stop rebinding' key to the rebinded key")
+                raise ValueError("Impossible to rebind the old key to the 'stop rebinding' key")
         except ValueError as e:
-            self.createAndShowPopup(PopupTypes.Error, "Error on button click, one or more fields must be empty or have a the same keybind:",e)
+            self.createAndShowPopup(PopupTypes.Error,
+                                    "Error on button click, one or more fields must be empty or have a the same keybind:",e)
             return
 
         try:
