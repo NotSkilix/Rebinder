@@ -65,3 +65,5 @@ Then, you can run it using the following command:
 ```bash
 ruff check
 ```
+
+The linting is automatically ran on each Push and Pull Request thanks to a GitHub Workflow.
