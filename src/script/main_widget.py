@@ -4,7 +4,23 @@ import sys
 from PySide6 import QtCore, QtWidgets, QtGui
 from .type_def import PopupTypes
 
+"""
+MainWidget class is the main widget of the rebinder application.
+It provides a GUI for rebinding keys and stopping the rebinding process.
+
+Attributes:
+    isPlayButton (bool): Indicates whether the play button is currently active.
+    remap (keyboard.remap_key): The remapped key.
+    stopHotkeyEvent (keyboard.hook_key): The event to stop the rebinding.
+"""
 class MainWidget(QtWidgets.QWidget):
+    isPlayButton = True
+
+    """
+    Constructor for MainWidget.
+    
+    Initializes the GUI elements and layout for the rebinder application.
+    """
     def __init__(self):
         super().__init__()
 
@@ -38,16 +54,14 @@ class MainWidget(QtWidgets.QWidget):
 
         # StopRebinding layout & elements
         stopRebindingText = QtWidgets.QLabel("The keybind to stop the rebinding: ")
-        self.stopRebindingKey = QtWidgets.QLineEdit(maxLength=6, placeholderText="Stop rebinding key...")
+        self.stopRebindingKeyField = QtWidgets.QLineEdit(maxLength=6, placeholderText="Stop rebinding key...")
 
         stopRebindingLayout = QtWidgets.QHBoxLayout()
         stopRebindingLayout.addWidget(stopRebindingText)
-        stopRebindingLayout.addWidget(self.stopRebindingKey)
+        stopRebindingLayout.addWidget(self.stopRebindingKeyField)
 
         # Buttons
-        self.rebindButton = QtWidgets.QPushButton("Play")
-        self.stopRebindButton = QtWidgets.QPushButton("Stop")
-        self.stopRebindButton.setDisabled(True)
+        self.playAndStopButton = QtWidgets.QPushButton("Play")
 
         # 'Build' the widget
         mainLayout = QtWidgets.QVBoxLayout(self)
@@ -61,23 +75,37 @@ class MainWidget(QtWidgets.QWidget):
         mainLayout.addLayout(stopRebindingLayout)
         mainLayout.addSpacing(20)
         buttonLayout = QtWidgets.QHBoxLayout()
-        buttonLayout.addWidget(self.rebindButton)
-        buttonLayout.addWidget(self.stopRebindButton)
+        buttonLayout.addWidget(self.playAndStopButton)
         mainLayout.addLayout(buttonLayout)
         mainLayout.addSpacing(30)
         mainLayout.addWidget(bottom, alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
 
         # Add listeners
-        self.rebindButton.clicked.connect(self.onRebindButtonClick)
+        self.playAndStopButton.clicked.connect(self.onplayAndStopButtonClick)
 
     """
-    This function is called when the rebind button is clicked.
+    onplayAndStopButtonClick method is called when the play/stop button is clicked.
     
-    It checks if the fields are empty and if they are not, it tries to rebind the keys.
-    If the fields are empty, it raises a ValueError and prints the error message to stderr.
+    It checks the state of the button and either starts or stops the rebinding process.
+        - If the button is in play state, it calls the playRebinding method.
+        - If the button is in stop state, it calls the stopRebinding method.
     """
-    def onRebindButtonClick(self):
+    def onplayAndStopButtonClick(self):
+        if self.isPlayButton:
+            self.playRebinding()
+        else:
+            self.stopRebinding()
+
+    """
+    Called by "onplayAndStopButtonClick" when the play button is clicked.
+    
+    It checks the input fields for validity and starts the rebinding process.
+    Disable the input fields and changes the button text to "Stop".
+    """
+    def playRebinding(self):
+        # Fields check
         try:
+            # Check if the fields are empty
             if self.keyToRebindField.text() == "" and self.newKeyBindField.text() == "":
                 raise ValueError("The keybinds have been left empty")
             elif self.keyToRebindField.text() == "":
@@ -85,49 +113,47 @@ class MainWidget(QtWidgets.QWidget):
             elif self.newKeyBindField.text() == "":
                 raise ValueError("The new keybind has been left empty")
 
-            if self.keyToRebindField.text() == self.newKeyBindField.text() == self.stopRebindingKey.text():
+            # Check if the fields are the same
+            if self.keyToRebindField.text() == self.newKeyBindField.text() == self.stopRebindingKeyField.text():
                 raise ValueError("Impossible to bind every keybinds to the same one")
             elif self.keyToRebindField.text() == self.newKeyBindField.text():
                 raise ValueError("Impossible to rebind the old key to the itself")
-            elif self.keyToRebindField.text() == self.stopRebindingKey.text():
+            elif self.keyToRebindField.text() == self.stopRebindingKeyField.text():
                 raise ValueError("Impossible to rebind the old key to the 'stop rebinding' key")
         except ValueError as e:
             self.createAndShowPopup(PopupTypes.Error,
-                                    "Error on button click, one or more fields must be empty or have a the same keybind:",e)
+                                    "Error on button click, one or more fields must be empty or have a the same keybind:",
+                                    e)
             return
 
-        try:
-            if self.stopRebindingKey != "":
-                self.remap = keyboard.remap_key(self.keyToRebindField.text(), self.newKeyBindField.text())
-        except ValueError as e:
-            self.createAndShowPopup(PopupTypes.Error, "Error on button click, one of the keybind must be incorrect/inexistant:",e)
-            return
+        # Rebind the keys
+        self.remap = keyboard.remap_key(self.keyToRebindField.text(), self.newKeyBindField.text())
 
+        # Set the stop rebinding key to unbind the keys
         try:
-            self.stopHotkeyEvent = keyboard.hook_key(self.stopRebindingKey.text(),self.unbindKeys, suppress=True)
+            self.stopHotkeyEvent = keyboard.hook_key(self.stopRebindingKeyField.text(), self.stopRebinding,
+                                                     suppress=True)
         except ValueError as e:
             if e == "Can only normalize non-empty string names. Unexpected ''":
-                self.createAndShowPopup(PopupTypes.Error, "Error on button click, the keybind to stop the rebinding is empty:",e)
+                self.createAndShowPopup(PopupTypes.Error,
+                                        "Error on button click, the keybind to stop the rebinding is empty:", e)
                 return
 
         self.keyToRebindField.setDisabled(True)
         self.newKeyBindField.setDisabled(True)
-        self.rebindButton.setDisabled(True)
-        self.stopRebindButton.setDisabled(False)
-        self.stopRebindButton.clicked.connect(self.unbindKeys)
+        self.stopRebindingKeyField.setDisabled(True)
+
+        self.playAndStopButton.setText("Stop")
+        self.isPlayButton = False
 
         self.window().showMinimized()
 
     """
+    Called by "onplayAndStopButtonClick" when the stop button is clicked.
     
-    This function is called when the "stop rebinding" key is pressed
-    
-    It unbind itself and unbind the remapping (rebinding)
-    Enable back the elements that were disabled before and show back the window if it is minimized
-    
-    Event is set to None by default because it is not required when the stop button is clicked
+    It unbinds the keys and re-enables the input fields.
     """
-    def unbindKeys(self, event=None):
+    def stopRebinding(self, event=None):
         if hasattr(self, 'stopHotkeyEvent'):
             keyboard.unhook_key(self.stopHotkeyEvent)
             del self.stopHotkeyEvent
@@ -136,29 +162,30 @@ class MainWidget(QtWidgets.QWidget):
             keyboard.unhook(self.remap)
             del self.remap
         except Exception as e:
+            print("Error while trying to unhook the keybinds: ", file=sys.stderr)
             print(e, file=sys.stderr)
+            return
 
         self.keyToRebindField.setDisabled(False)
         self.newKeyBindField.setDisabled(False)
-        self.rebindButton.setDisabled(False)
-        self.stopRebindingKey.setDisabled(False)
-        self.stopRebindButton.setDisabled(True)
-        self.stopRebindButton.setStyleSheet("QPushButton:disabled:hover { background-color: none; }")
-        self.stopRebindButton.clicked.disconnect()
+        self.stopRebindingKeyField.setDisabled(False)
+
+        self.playAndStopButton.setText("Play")
+        self.isPlayButton = True
 
         if self.window().isMinimized():
             self.window().showNormal()
 
-
     """
-    This function is called when the "stop rebinding" key is pressed
+    createAndShowPopup method creates and shows a popup dialog with the given type, title, and content.
+    It is used to display error messages or other information to the user.
     
-    It creates a popup with the error message and shows it to the user
-    :param type The type of popup (error, info, etc...)
-    :param title The title label of the popup
-    :param content The thrown error
+    Args:
+        type (PopupTypes): The type of the popup (error, info, etc.).
+        title (str): The title of the popup.
+        content (Exception): The content to be displayed in the popup.
     """
-    def createAndShowPopup(self, type, title, content : ValueError):
+    def createAndShowPopup(self, type : PopupTypes, title: str, content : Exception):
         popup = QtWidgets.QDialog(self)
 
         if type == PopupTypes.Error:
