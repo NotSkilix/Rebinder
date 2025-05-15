@@ -4,9 +4,23 @@ import sys
 from PySide6 import QtCore, QtWidgets, QtGui
 from .type_def import PopupTypes
 
+"""
+MainWidget class is the main widget of the rebinder application.
+It provides a GUI for rebinding keys and stopping the rebinding process.
+
+Attributes:
+    isPlayButton (bool): Indicates whether the play button is currently active.
+    remap (keyboard.remap_key): The remapped key.
+    stopHotkeyEvent (keyboard.hook_key): The event to stop the rebinding.
+"""
 class MainWidget(QtWidgets.QWidget):
     isPlayButton = True
 
+    """
+    Constructor for MainWidget.
+    
+    Initializes the GUI elements and layout for the rebinder application.
+    """
     def __init__(self):
         super().__init__()
 
@@ -70,10 +84,11 @@ class MainWidget(QtWidgets.QWidget):
         self.playAndStopButton.clicked.connect(self.onplayAndStopButtonClick)
 
     """
-    This function is called when the rebind button is clicked.
+    onplayAndStopButtonClick method is called when the play/stop button is clicked.
     
-    It checks if the fields are empty and if they are not, it tries to rebind the keys.
-    If the fields are empty, it raises a ValueError and prints the error message to stderr.
+    It checks the state of the button and either starts or stops the rebinding process.
+        - If the button is in play state, it calls the playRebinding method.
+        - If the button is in stop state, it calls the stopRebinding method.
     """
     def onplayAndStopButtonClick(self):
         if self.isPlayButton:
@@ -81,6 +96,12 @@ class MainWidget(QtWidgets.QWidget):
         else:
             self.stopRebinding()
 
+    """
+    Called by "onplayAndStopButtonClick" when the play button is clicked.
+    
+    It checks the input fields for validity and starts the rebinding process.
+    Disable the input fields and changes the button text to "Stop".
+    """
     def playRebinding(self):
         # Fields check
         try:
@@ -126,14 +147,11 @@ class MainWidget(QtWidgets.QWidget):
         self.isPlayButton = False
 
         self.window().showMinimized()
+
     """
+    Called by "onplayAndStopButtonClick" when the stop button is clicked.
     
-    This function is called when the "stop rebinding" key is pressed
-    
-    It unbind itself and unbind the remapping (rebinding)
-    Enable back the elements that were disabled before and show back the window if it is minimized
-    
-    Event is set to None by default because it is not required when the stop button is clicked
+    It unbinds the keys and re-enables the input fields.
     """
     def stopRebinding(self, event=None):
         if hasattr(self, 'stopHotkeyEvent'):
@@ -159,14 +177,15 @@ class MainWidget(QtWidgets.QWidget):
             self.window().showNormal()
 
     """
-    This function is called when the "stop rebinding" key is pressed
+    createAndShowPopup method creates and shows a popup dialog with the given type, title, and content.
+    It is used to display error messages or other information to the user.
     
-    It creates a popup with the error message and shows it to the user
-    :param type The type of popup (error, info, etc...)
-    :param title The title label of the popup
-    :param content The thrown error
+    Args:
+        type (PopupTypes): The type of the popup (error, info, etc.).
+        title (str): The title of the popup.
+        content (Exception): The content to be displayed in the popup.
     """
-    def createAndShowPopup(self, type, title, content : ValueError):
+    def createAndShowPopup(self, type : PopupTypes, title: str, content : Exception):
         popup = QtWidgets.QDialog(self)
 
         if type == PopupTypes.Error:
