@@ -52,3 +52,18 @@ pip install -r requirements.txt
 ```
 
 You are now ready to run the project. \
+
+### Linting
+I personally use [Ruff](https://github.com/astral-sh/ruff) to check on the code quality.
+
+Download Ruff using the following command or use any other tools (PyCharm integrated python packages manager):
+```bash
+pip install ruff
+```
+
+Then, you can run it using the following command:
+```bash
+ruff check
+```
+
+The linting is automatically ran on each Push and Pull Request thanks to a GitHub Workflow.
