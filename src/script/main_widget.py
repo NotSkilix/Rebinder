@@ -122,12 +122,15 @@ class MainWidget(QtWidgets.QWidget):
                 raise ValueError("Impossible to rebind the old key to the 'stop rebinding' key")
         except ValueError as e:
             self.createAndShowPopup(PopupTypes.Error,
-                                    "Error on button click, one or more fields must be empty or have a the same keybind:",
-                                    e)
+                                    "Error on button click, one or more fields must be empty or have a the same keybind:",e)
             return
 
         # Rebind the keys
-        self.remap = keyboard.remap_key(self.keyToRebindField.text(), self.newKeyBindField.text())
+        try:
+            self.remap = keyboard.remap_key(self.keyToRebindField.text(), self.newKeyBindField.text())
+        except Exception as e:
+            self.createAndShowPopup(PopupTypes.Error, "Error on button click, the keybinds are invalid:", e)
+            return
 
         # Set the stop rebinding key to unbind the keys
         try:
