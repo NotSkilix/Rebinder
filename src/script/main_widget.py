@@ -15,6 +15,7 @@ Attributes:
 """
 class MainWidget(QtWidgets.QWidget):
     isPlayButton = True
+    disabledElements = []
 
     """
     Constructor for MainWidget.
@@ -81,7 +82,11 @@ class MainWidget(QtWidgets.QWidget):
         mainLayout.addWidget(bottom, alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
 
         # Add listeners
-        self.playAndStopButton.clicked.connect(self.onplayAndStopButtonClick)
+        self.playAndStopButton.clicked.connect(self.onplayAndStopButtonClick) # Button click
+        self.keyToRebindField.textEdited.connect(self.checkFields) # Text edit
+        self.newKeyBindField.textEdited.connect(self.checkFields) # Text edit
+        self.stopRebindingKeyField.textEdited.connect(self.checkFields) # Text edit
+
 
     """
     onplayAndStopButtonClick method is called when the play/stop button is clicked.
@@ -112,14 +117,6 @@ class MainWidget(QtWidgets.QWidget):
                 raise ValueError("The key to rebind has been left empty")
             elif self.newKeyBindField.text() == "":
                 raise ValueError("The new keybind has been left empty")
-
-            # Check if the fields are the same
-            if self.keyToRebindField.text() == self.newKeyBindField.text() == self.stopRebindingKeyField.text():
-                raise ValueError("Impossible to bind every keybinds to the same one")
-            elif self.keyToRebindField.text() == self.newKeyBindField.text():
-                raise ValueError("Impossible to rebind the old key to the itself")
-            elif self.keyToRebindField.text() == self.stopRebindingKeyField.text():
-                raise ValueError("Impossible to rebind the old key to the 'stop rebinding' key")
         except ValueError as e:
             self.createAndShowPopup(PopupTypes.Error,
                                     "Error on button click, one or more fields must be empty or have a the same keybind:",e)
@@ -208,3 +205,39 @@ class MainWidget(QtWidgets.QWidget):
         popup.setLayout(layout)
 
         popup.show()
+
+    """
+    checkFields method checks the input fields for validity and enables/disables the play/stop button accordingly.
+    It ensures that the keyToRebindField, newKeyBindField, and stopRebindingKeyField are not the same.
+    """ #TODO: Add a hover effect to the elements
+    def checkFields(self):
+        # Check if the fields are the same
+        if self.keyToRebindField.text() == self.newKeyBindField.text() == self.stopRebindingKeyField.text():
+            self.addHover([self.keyToRebindField, self.newKeyBindField, self.stopRebindingKeyField],
+                          [self.playAndStopButton])
+        elif self.keyToRebindField.text() == self.newKeyBindField.text():
+            self.addHover([self.keyToRebindField, self.newKeyBindField],
+                          [self.playAndStopButton])
+        elif self.keyToRebindField.text() == self.stopRebindingKeyField.text():
+            self.addHover([self.keyToRebindField, self.stopRebindingKeyField],
+                          [self.playAndStopButton])
+        else :
+            if self.disabledElements is not []:
+                self.removeHover()
+
+    """
+    addHover method disables the specified elements and adds them to the disabledElements list.
+    
+    """ #TODO: Add a hover effect to the elements
+    def addHover(self, similarLabel : list, elementsToDisable : list):
+        for elementToDisable in elementsToDisable:
+            elementToDisable.setDisabled(True)
+            self.disabledElements.append(elementToDisable)
+
+    """
+    removeHover method re-enables the disabled elements and removes them from the disabledElements list.
+    """ #TODO: Add a hover effect to the elements
+    def removeHover(self):
+        for disabledElement in self.disabledElements:
+            disabledElement.setDisabled(False)
+            self.disabledElements.remove(disabledElement)
