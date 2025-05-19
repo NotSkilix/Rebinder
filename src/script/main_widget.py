@@ -222,7 +222,7 @@ class MainWidget(QtWidgets.QWidget):
             self.addHover([self.keyToRebindField, self.stopRebindingKeyField],
                           [self.playAndStopButton])
         else :
-            if self.disabledElements is not []:
+            if self.disabledElements != []:
                 self.removeHover()
 
     """
