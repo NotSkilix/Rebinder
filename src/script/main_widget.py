@@ -226,6 +226,10 @@ class MainWidget(QtWidgets.QWidget):
                     self.addHover([field, nextField])
             i+=1
 
+        # Disable the play button if the two main fields are left empty
+        if self.keyToRebindField.text() == "" or self.newKeyBindField.text() == "":
+            self.playAndStopButton.setDisabled(True)
+
 
     """
     addHover method adds a hover effect to the specified fields and disables the play button.
