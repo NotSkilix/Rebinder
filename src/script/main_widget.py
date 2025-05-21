@@ -15,6 +15,7 @@ Attributes:
 """
 class MainWidget(QtWidgets.QWidget):
     isPlayButton = True
+    listOfFields = []
 
     """
     Constructor for MainWidget.
@@ -39,6 +40,7 @@ class MainWidget(QtWidgets.QWidget):
         # keyToRebind layout & elements
         keyToRebindText = QtWidgets.QLabel("Write a key to rebind (a, F3,...): ")
         self.keyToRebindField = QtWidgets.QLineEdit(maxLength=6, placeholderText="Key to rebind...")
+        self.listOfFields.append(self.keyToRebindField)
 
         keyToRebinLayout = QtWidgets.QHBoxLayout()
         keyToRebinLayout.addWidget(keyToRebindText)
@@ -47,6 +49,7 @@ class MainWidget(QtWidgets.QWidget):
         # NewKeyBind layout & elements
         newKeyBindText = QtWidgets.QLabel("Write the new keybind (b, F4,...): ")
         self.newKeyBindField = QtWidgets.QLineEdit(maxLength=6, placeholderText="New bind...")
+        self.listOfFields.append(self.newKeyBindField)
 
         newKeyBindLayout = QtWidgets.QHBoxLayout()
         newKeyBindLayout.addWidget(newKeyBindText)
@@ -55,6 +58,7 @@ class MainWidget(QtWidgets.QWidget):
         # StopRebinding layout & elements
         stopRebindingText = QtWidgets.QLabel("The keybind to stop the rebinding: ")
         self.stopRebindingKeyField = QtWidgets.QLineEdit(maxLength=6, placeholderText="Stop rebinding key...")
+        self.listOfFields.append(self.stopRebindingKeyField)
 
         stopRebindingLayout = QtWidgets.QHBoxLayout()
         stopRebindingLayout.addWidget(stopRebindingText)
@@ -62,6 +66,7 @@ class MainWidget(QtWidgets.QWidget):
 
         # Buttons
         self.playAndStopButton = QtWidgets.QPushButton("Play")
+        self.playAndStopButton.setDisabled(True) # Disable it by default, will be re-enabled on first input
 
         # 'Build' the widget
         mainLayout = QtWidgets.QVBoxLayout(self)
@@ -81,7 +86,11 @@ class MainWidget(QtWidgets.QWidget):
         mainLayout.addWidget(bottom, alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
 
         # Add listeners
-        self.playAndStopButton.clicked.connect(self.onplayAndStopButtonClick)
+        self.playAndStopButton.clicked.connect(self.onplayAndStopButtonClick) # Button click
+        self.keyToRebindField.textEdited.connect(self.checkFields) # Text edit
+        self.newKeyBindField.textEdited.connect(self.checkFields) # Text edit
+        self.stopRebindingKeyField.textEdited.connect(self.checkFields) # Text edit
+
 
     """
     onplayAndStopButtonClick method is called when the play/stop button is clicked.
@@ -112,14 +121,6 @@ class MainWidget(QtWidgets.QWidget):
                 raise ValueError("The key to rebind has been left empty")
             elif self.newKeyBindField.text() == "":
                 raise ValueError("The new keybind has been left empty")
-
-            # Check if the fields are the same
-            if self.keyToRebindField.text() == self.newKeyBindField.text() == self.stopRebindingKeyField.text():
-                raise ValueError("Impossible to bind every keybinds to the same one")
-            elif self.keyToRebindField.text() == self.newKeyBindField.text():
-                raise ValueError("Impossible to rebind the old key to the itself")
-            elif self.keyToRebindField.text() == self.stopRebindingKeyField.text():
-                raise ValueError("Impossible to rebind the old key to the 'stop rebinding' key")
         except ValueError as e:
             self.createAndShowPopup(PopupTypes.Error,
                                     "Error on button click, one or more fields must be empty or have a the same keybind:",e)
@@ -208,3 +209,43 @@ class MainWidget(QtWidgets.QWidget):
         popup.setLayout(layout)
 
         popup.show()
+
+    """
+    checkFields method checks the content of the input fields and highlights similar fields.
+    It removes any existing highlights and re-applies them if needed.
+    """
+    def checkFields(self):
+        self.removeHover() # Remove all the hovers and re-applicate them if needed
+
+        # Check the fields content
+        i = 0
+        for field in self.listOfFields:
+            for nextField in self.listOfFields[1+i:]:
+                if field.text() != "" and field.text() == nextField.text():
+                    print("if")
+                    self.addHover([field, nextField])
+            i+=1
+
+
+    """
+    addHover method adds a hover effect to the specified fields and disables the play button.
+    """
+    def addHover(self, similarLabels : list):
+        # Background color
+        for similarLabel in similarLabels:
+            similarLabel.setStyleSheet("background-color: red")
+
+        # Disable the play button
+        self.playAndStopButton.setDisabled(True)
+
+
+    """
+    removeHover method removes the hover effect from all fields and re-enables the play button.
+    """
+    def removeHover(self):
+        # Remove hover and background in the fields
+        for elements in self.listOfFields:
+            elements.setStyleSheet("background-color: none")
+
+        # Re-enable the play button
+        self.playAndStopButton.setDisabled(False)
