@@ -112,20 +112,6 @@ class MainWidget(QtWidgets.QWidget):
     Disable the input fields and changes the button text to "Stop".
     """
     def playRebinding(self):
-        # Fields check
-        try:
-            # Check if the fields are empty
-            if self.keyToRebindField.text() == "" and self.newKeyBindField.text() == "":
-                raise ValueError("The keybinds have been left empty")
-            elif self.keyToRebindField.text() == "":
-                raise ValueError("The key to rebind has been left empty")
-            elif self.newKeyBindField.text() == "":
-                raise ValueError("The new keybind has been left empty")
-        except ValueError as e:
-            self.createAndShowPopup(PopupTypes.Error,
-                                    "Error on button click, one or more fields must be empty or have a the same keybind:",e)
-            return
-
         # Rebind the keys
         try:
             self.remap = keyboard.remap_key(self.keyToRebindField.text(), self.newKeyBindField.text())
