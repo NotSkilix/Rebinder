@@ -1,0 +1,26 @@
+name: Build
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Install pyInstaller
+        run: pip install pyinstaller
+
+      - name: Build the app
+        run: pyinstaller --onefile src/main.py
