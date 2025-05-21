@@ -1,4 +1,4 @@
-from main_widget import *
+from script.main_widget import *
 
 def main():
     print("Executing...")
