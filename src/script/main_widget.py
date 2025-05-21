@@ -15,7 +15,7 @@ Attributes:
 """
 class MainWidget(QtWidgets.QWidget):
     isPlayButton = True
-    disabledElements = []
+    listOfFields = []
 
     """
     Constructor for MainWidget.
@@ -40,6 +40,7 @@ class MainWidget(QtWidgets.QWidget):
         # keyToRebind layout & elements
         keyToRebindText = QtWidgets.QLabel("Write a key to rebind (a, F3,...): ")
         self.keyToRebindField = QtWidgets.QLineEdit(maxLength=6, placeholderText="Key to rebind...")
+        self.listOfFields.append(self.keyToRebindField)
 
         keyToRebinLayout = QtWidgets.QHBoxLayout()
         keyToRebinLayout.addWidget(keyToRebindText)
@@ -48,6 +49,7 @@ class MainWidget(QtWidgets.QWidget):
         # NewKeyBind layout & elements
         newKeyBindText = QtWidgets.QLabel("Write the new keybind (b, F4,...): ")
         self.newKeyBindField = QtWidgets.QLineEdit(maxLength=6, placeholderText="New bind...")
+        self.listOfFields.append(self.newKeyBindField)
 
         newKeyBindLayout = QtWidgets.QHBoxLayout()
         newKeyBindLayout.addWidget(newKeyBindText)
@@ -56,6 +58,7 @@ class MainWidget(QtWidgets.QWidget):
         # StopRebinding layout & elements
         stopRebindingText = QtWidgets.QLabel("The keybind to stop the rebinding: ")
         self.stopRebindingKeyField = QtWidgets.QLineEdit(maxLength=6, placeholderText="Stop rebinding key...")
+        self.listOfFields.append(self.stopRebindingKeyField)
 
         stopRebindingLayout = QtWidgets.QHBoxLayout()
         stopRebindingLayout.addWidget(stopRebindingText)
@@ -207,37 +210,41 @@ class MainWidget(QtWidgets.QWidget):
         popup.show()
 
     """
-    checkFields method checks the input fields for validity and enables/disables the play/stop button accordingly.
-    It ensures that the keyToRebindField, newKeyBindField, and stopRebindingKeyField are not the same.
-    """ #TODO: Add a hover effect to the elements
+    checkFields method checks the content of the input fields and highlights similar fields.
+    It removes any existing highlights and re-applies them if needed.
+    """
     def checkFields(self):
-        # Check if the fields are the same
-        if self.keyToRebindField.text() == self.newKeyBindField.text() == self.stopRebindingKeyField.text():
-            self.addHover([self.keyToRebindField, self.newKeyBindField, self.stopRebindingKeyField],
-                          [self.playAndStopButton])
-        elif self.keyToRebindField.text() == self.newKeyBindField.text():
-            self.addHover([self.keyToRebindField, self.newKeyBindField],
-                          [self.playAndStopButton])
-        elif self.keyToRebindField.text() == self.stopRebindingKeyField.text():
-            self.addHover([self.keyToRebindField, self.stopRebindingKeyField],
-                          [self.playAndStopButton])
-        else :
-            if self.disabledElements != []:
-                self.removeHover()
+        self.removeHover() # Remove all the hovers and re-applicate them if needed
+
+        # Check the fields content
+        i = 0
+        for field in self.listOfFields:
+            for nextField in self.listOfFields[1+i:]:
+                if field.text() != "" and field.text() == nextField.text():
+                    print("if")
+                    self.addHover([field, nextField])
+            i+=1
+
 
     """
-    addHover method disables the specified elements and adds them to the disabledElements list.
-    
-    """ #TODO: Add a hover effect to the elements
-    def addHover(self, similarLabel : list, elementsToDisable : list):
-        for elementToDisable in elementsToDisable:
-            elementToDisable.setDisabled(True)
-            self.disabledElements.append(elementToDisable)
+    addHover method adds a hover effect to the specified fields and disables the play button.
+    """
+    def addHover(self, similarLabels : list):
+        # Background color
+        for similarLabel in similarLabels:
+            similarLabel.setStyleSheet("background-color: red")
+
+        # Disable the play button
+        self.playAndStopButton.setDisabled(True)
+
 
     """
-    removeHover method re-enables the disabled elements and removes them from the disabledElements list.
-    """ #TODO: Add a hover effect to the elements
+    removeHover method removes the hover effect from all fields and re-enables the play button.
+    """
     def removeHover(self):
-        for disabledElement in self.disabledElements:
-            disabledElement.setDisabled(False)
-            self.disabledElements.remove(disabledElement)
+        # Remove hover and background in the fields
+        for elements in self.listOfFields:
+            elements.setStyleSheet("background-color: none")
+
+        # Re-enable the play button
+        self.playAndStopButton.setDisabled(False)
