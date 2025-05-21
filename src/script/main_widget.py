@@ -66,6 +66,7 @@ class MainWidget(QtWidgets.QWidget):
 
         # Buttons
         self.playAndStopButton = QtWidgets.QPushButton("Play")
+        self.playAndStopButton.setDisabled(True) # Disable it by default, will be re-enabled on first input
 
         # 'Build' the widget
         mainLayout = QtWidgets.QVBoxLayout(self)
