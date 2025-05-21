@@ -211,7 +211,7 @@ class MainWidget(QtWidgets.QWidget):
                 # Check if the key is correct
                 try:
                     keyboard.key_to_scan_codes(field.text(), True)
-                except ValueError as e:
+                except ValueError:
                     self.addHover([field])
                 # Check if two keys aren't the same
                 for nextField in self.listOfFields[1+i:]:
