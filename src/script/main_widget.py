@@ -197,20 +197,27 @@ class MainWidget(QtWidgets.QWidget):
         popup.show()
 
     """
-    checkFields method checks the content of the input fields and highlights similar fields.
-    It removes any existing highlights and re-applies them if needed.
+    checkFields method checks the content of the input fields and adds hover effects if needed.
+    
+    It also disables the play button if the two main fields are empty.
     """
     def checkFields(self):
         self.removeHover() # Remove all the hovers and re-applicate them if needed
 
-        # Check the fields content
+        # Check the field content
         i = 0
         for field in self.listOfFields:
-            for nextField in self.listOfFields[1+i:]:
-                if field.text() != "" and field.text() == nextField.text():
-                    print("if")
-                    self.addHover([field, nextField])
-            i+=1
+            if field.text() != "":
+                # Check if the key is correct
+                try:
+                    keyboard.key_to_scan_codes(field.text(), True)
+                except ValueError as e:
+                    self.addHover([field])
+                # Check if two keys aren't the same
+                for nextField in self.listOfFields[1+i:]:
+                    if field.text() == nextField.text():
+                        self.addHover([field, nextField])
+                i+=1
 
         # Disable the play button if the two main fields are left empty
         if self.keyToRebindField.text() == "" or self.newKeyBindField.text() == "":
