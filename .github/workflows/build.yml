@@ -28,8 +28,8 @@ jobs:
         run: |
           # Storing the private key
           mkdir -p ~\.ssh
-          echo "$env:SSH_PRIVATE_KEY" > ~\.ssh\production_key
-          icacls ~\.ssh\production_key /inheritance:r /grant:r "$env:USERNAME`:R"
+          $privateKeyPath = Join-Path -Path $env:USERPROFILE -ChildPath ".ssh\production_key"
+          Set-Content -Path $privateKeyPath -Value $env:SSH_PRIVATE_KEY -NoNewline
           
           # Add GitHub to known hosts
           ssh-keyscan github.com >> ~\.ssh\known_hosts
