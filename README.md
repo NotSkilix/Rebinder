@@ -15,6 +15,15 @@ Its main role is to fix issues such as "my 'F' keys are broken" etc...
 Also contains a little interface for the user.
 
 ## Project Setup (user)
+**⚠️ Currently, the application is only available throught the GitHub [Release](https://github.com/NotSkilix/Rebinder/releases) page of this project, there is no other way to download this application ⚠️**.
+
+You will be able to download the most recent version of the project by going to the bottom of the release text that contains the "latest" tag, like seen below: \
+![image](https://github.com/user-attachments/assets/92deb5d8-20a2-47e2-a333-7493305b557c) \
+In the end of the text explaining whats new to this version and what is set for the next one, you'll be able to find the `.exe` file, download it and run it. 
+
+> Your antivirus might find this program dangerous and even try to block it. It is not a malware, the code is open source as you know \
+> Note that build is only available since the version 0.3 and higher
+
 
 ## Project Setup (dev)
 ### Clone the project
@@ -31,7 +40,7 @@ https://github.com/NotSkilix/Rebinder.git
 #### Virtual environment
 Its recomended to create a virtual environment before installing the requirements. \
 
-You can either do this manually:
+You can either do this manually: \
 To do so, you can use the following command:
 ```bash
 python -m venv venv
@@ -43,7 +52,7 @@ venv\Scripts\activate
 
 Or if you have PyCharm from JetBrains, you can create a virtual environment directly from the IDE. \
 To do so, go to `File > Settings > Project: Rebinder > Python Interpreter` and select the option to create a new virtual environment. \
-Then, select the location of the virtual environment and click on `OK`. \
+Then, select the location of the virtual environment and click on `OK`. 
 
 #### The rest
 Once the virtual environment is created (or not if you want it to be installed globally), you can install the requirements using the following command:
@@ -51,4 +60,4 @@ Once the virtual environment is created (or not if you want it to be installed g
 pip install -r requirements.txt
 ```
 
-You are now ready to run the project. \
+You are now ready to run the project. 
