@@ -22,56 +22,14 @@ jobs:
         with:
           python-version: '3.13'
 
-      - name: Set up SSH key
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.PRODUCTION_PRIVATE_KEY }}
-        run: |
-          # Storing the private key
-          mkdir -p ~\.ssh
-          $privateKeyPath = Join-Path -Path $env:USERPROFILE -ChildPath ".ssh\production_key"
-          Set-Content -Path $privateKeyPath -Value $env:SSH_PRIVATE_KEY -NoNewline
-          
-          # Add GitHub to known hosts
-          ssh-keyscan github.com >> ~\.ssh\known_hosts
-          
-          # Verify the SSH key setup
-          if (-not (Test-Path ~\.ssh\production_key)) {
-            Write-Error "SSH key setup failed: production_key not found"
-            exit 1
-          }
-          if (-not (Test-Path ~\.ssh\known_hosts)) {
-            Write-Error "SSH key setup failed: known_hosts not found"
-            exit 1
-          }
-          
-          # Verify the SSH key content
-          $keyContent = Get-Content ~\.ssh\production_key -ErrorAction SilentlyContinue
-          if (-not $keyContent) {
-            Write-Error "SSH key setup failed: production_key is empty"
-            exit 1
-          }
-          
-          ssh -T git@github.com
-          
-          Write-Host "SSH key setup completed successfully"
-        shell: powershell
-
       - name: Install pyInstaller
         run: pip install pyinstaller
 
       - name: Build the app
         run: pyinstaller --onefile src/main.py
 
-      - name: Publish the app
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
-          git add -f dist/
-          git commit -m "Publish pyinstaller build"
-          
-          git remote set-url origin git@github.com:${{ github.repository }}.git
-          git push origin HEAD:${{ github.ref_name }}
-
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.PRODUCTION_PRIVATE_KEY }}
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: dist/
