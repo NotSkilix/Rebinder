@@ -51,6 +51,8 @@ jobs:
             exit 1
           }
           
+          ssh -T git@github.com
+          
           Write-Host "SSH key setup completed successfully"
         shell: powershell
 
