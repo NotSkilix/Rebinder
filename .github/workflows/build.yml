@@ -29,7 +29,7 @@ jobs:
           # Storing the private key
           mkdir -p ~\.ssh
           echo "$env:SSH_PRIVATE_KEY" > ~\.ssh\production_key
-          icacls ~\.ssh\production_key /inheritance:r /grant:r "$env:USERNAME:(R)"
+          icacls ~\.ssh\production_key /inheritance:r /grant:r "$env:USERNAME`:R"
           
           # Add GitHub to known hosts
           ssh-keyscan github.com >> ~\.ssh\known_hosts
@@ -64,6 +64,12 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add dist/
-          git commit -m "Publier le binaire généré par PyInstaller"
+          
+          git add -f dist/
+          git commit -m "Publish pyinstaller build"
+          
+          git remote set-url origin git@github.com:${{ github.repository }}.git
           git push origin HEAD:${{ github.ref_name }}
+
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.PRODUCTION_PRIVATE_KEY }}
