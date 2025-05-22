@@ -26,10 +26,32 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.PRODUCTION_PRIVATE_KEY }}
         run: |
+          # Storing the private key
           mkdir -p ~\.ssh
           echo "$env:SSH_PRIVATE_KEY" > ~\.ssh\production_key
           icacls ~\.ssh\production_key /inheritance:r /grant:r "$env:USERNAME:(R)"
+          
+          # Add GitHub to known hosts
           ssh-keyscan github.com >> ~\.ssh\known_hosts
+          
+          # Verify the SSH key setup
+          if (-not (Test-Path ~\.ssh\production_key)) {
+            Write-Error "SSH key setup failed: production_key not found"
+            exit 1
+          }
+          if (-not (Test-Path ~\.ssh\known_hosts)) {
+            Write-Error "SSH key setup failed: known_hosts not found"
+            exit 1
+          }
+          
+          # Verify the SSH key content
+          $keyContent = Get-Content ~\.ssh\production_key -ErrorAction SilentlyContinue
+          if (-not $keyContent) {
+            Write-Error "SSH key setup failed: production_key is empty"
+            exit 1
+          }
+          
+          Write-Host "SSH key setup completed successfully"
         shell: powershell
 
       - name: Install pyInstaller
