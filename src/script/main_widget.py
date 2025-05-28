@@ -126,7 +126,7 @@ class MainWidget(QtWidgets.QWidget):
         except ValueError as e:
             if e == "Can only normalize non-empty string names. Unexpected ''":
                 self.createAndShowPopup(PopupTypes.Error,
-                                        "Error on button click, the keybind to stop the rebinding is empty:", e)
+                                        "Error on button click, the keybind to stop the rebinding is empty:", Exception(e))
                 return
 
         self.keyToRebindField.setDisabled(True)
