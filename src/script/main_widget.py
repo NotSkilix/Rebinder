@@ -3,6 +3,7 @@ import sys
 
 from PySide6 import QtCore, QtWidgets, QtGui
 from .type_def import PopupTypes
+from .keyboard import Keyboard
 
 """
 MainWidget class is the main widget of the rebinder application.
@@ -26,7 +27,7 @@ class MainWidget(QtWidgets.QWidget):
         super().__init__()
 
         # Window settings
-        self.setWindowTitle("Rebinder V0.2")
+        self.setWindowTitle("Rebinder V0.3")
         self.setFixedWidth(400)  # Adjust the width as needed
         self.setFixedHeight(400)
         self.setStyleSheet("background-color: #0c0c0b;")
@@ -37,32 +38,8 @@ class MainWidget(QtWidgets.QWidget):
         bottom = QtWidgets.QLabel("Made with ❤ by NotSkilix", alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
         bottom.setFont(QtGui.QFont("Arial", 11))
 
-        # keyToRebind layout & elements
-        keyToRebindText = QtWidgets.QLabel("Write a key to rebind (a, F3,...): ")
-        self.keyToRebindField = QtWidgets.QLineEdit(maxLength=6, placeholderText="Key to rebind...")
-        self.listOfFields.append(self.keyToRebindField)
-
-        keyToRebinLayout = QtWidgets.QHBoxLayout()
-        keyToRebinLayout.addWidget(keyToRebindText)
-        keyToRebinLayout.addWidget(self.keyToRebindField)
-
-        # NewKeyBind layout & elements
-        newKeyBindText = QtWidgets.QLabel("Write the new keybind (b, F4,...): ")
-        self.newKeyBindField = QtWidgets.QLineEdit(maxLength=6, placeholderText="New bind...")
-        self.listOfFields.append(self.newKeyBindField)
-
-        newKeyBindLayout = QtWidgets.QHBoxLayout()
-        newKeyBindLayout.addWidget(newKeyBindText)
-        newKeyBindLayout.addWidget(self.newKeyBindField)
-
-        # StopRebinding layout & elements
-        stopRebindingText = QtWidgets.QLabel("The keybind to stop the rebinding: ")
-        self.stopRebindingKeyField = QtWidgets.QLineEdit(maxLength=6, placeholderText="Stop rebinding key...")
-        self.listOfFields.append(self.stopRebindingKeyField)
-
-        stopRebindingLayout = QtWidgets.QHBoxLayout()
-        stopRebindingLayout.addWidget(stopRebindingText)
-        stopRebindingLayout.addWidget(self.stopRebindingKeyField)
+        # Keyboard Grid
+        keyboard = Keyboard()
 
         # Buttons
         self.playAndStopButton = QtWidgets.QPushButton("Play")
@@ -72,24 +49,12 @@ class MainWidget(QtWidgets.QWidget):
         mainLayout = QtWidgets.QVBoxLayout(self)
 
         mainLayout.addWidget(title, alignment=QtCore.Qt.AlignmentFlag.AlignTop)
-        mainLayout.addSpacing(20)
-        mainLayout.addLayout(keyToRebinLayout)
-        mainLayout.addSpacing(10)
-        mainLayout.addLayout(newKeyBindLayout)
-        mainLayout.addSpacing(10)
-        mainLayout.addLayout(stopRebindingLayout)
-        mainLayout.addSpacing(20)
+        mainLayout.addLayout(keyboard)
         buttonLayout = QtWidgets.QHBoxLayout()
         buttonLayout.addWidget(self.playAndStopButton)
         mainLayout.addLayout(buttonLayout)
         mainLayout.addSpacing(30)
         mainLayout.addWidget(bottom, alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
-
-        # Add listeners
-        self.playAndStopButton.clicked.connect(self.onplayAndStopButtonClick) # Button click
-        self.keyToRebindField.textEdited.connect(self.checkFields) # Text edit
-        self.newKeyBindField.textEdited.connect(self.checkFields) # Text edit
-        self.stopRebindingKeyField.textEdited.connect(self.checkFields) # Text edit
 
 
     """
