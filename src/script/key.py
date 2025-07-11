@@ -5,6 +5,14 @@ from .type_def import KeyType
 
 
 class Key(QtWidgets.QPushButton):
+    keyStyle = """
+                color: black
+                border-radius: 4px;
+                border: 1px solid #EDE7E7;
+                background: #FFF;
+                box-shadow: 0px 2px 0px 0px #EDE7E7;
+              """
+
     def __init__(self, mainKey, secondaryKey=None, keyType : KeyType = KeyType.default):
         #TODO: manage keys size
         #TODO: Manage two keys (mainkey and secondary key)
@@ -15,11 +23,9 @@ class Key(QtWidgets.QPushButton):
 
         if keyType == keyType.default:
             self.setText(mainKey)
-            self.setStyleSheet("""
-                            color: black
-                            border-radius: 4px;
-                            border: 1px solid #EDE7E7;
-                            background: #FFF;
-                            box-shadow: 0px 2px 0px 0px #EDE7E7;
-                            """)
+            self.setStyleSheet(self.keyStyle)
             self.setFixedSize(QtCore.QSize(44,34))
+
+
+    def resetStatus(self):
+        self.setStyleSheet(self.keyStyle)
