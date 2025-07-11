@@ -1,6 +1,4 @@
-from multiprocessing.managers import Array
-
-from PySide6 import QtCore, QtWidgets
+from PySide6 import QtWidgets
 from .key import Key
 
 keys = [
