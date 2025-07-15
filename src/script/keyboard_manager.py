@@ -1,4 +1,5 @@
-import keyboard, sys
+import keyboard
+import sys
 from PySide6 import QtWidgets, QtCore
 
 from .key import Key

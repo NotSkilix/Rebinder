@@ -1,6 +1,5 @@
-import sys
-
 from PySide6 import QtCore, QtWidgets, QtGui
+
 from .type_def import PopupTypes
 from .keyboard_manager import KeyboardManager
 
