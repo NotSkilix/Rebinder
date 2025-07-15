@@ -1,9 +1,8 @@
-import keyboard
 import sys
 
 from PySide6 import QtCore, QtWidgets, QtGui
 from .type_def import PopupTypes
-from .keyboard import Keyboard
+from .keyboard_manager import KeyboardManager
 
 """
 MainWidget class is the main widget of the rebinder application.
@@ -39,7 +38,7 @@ class MainWidget(QtWidgets.QWidget):
         bottom.setFont(QtGui.QFont("Arial", 11))
 
         # Keyboard Grid
-        keyboard = Keyboard()
+        self.keyboard = KeyboardManager()
 
         # Buttons
         self.playAndStopButton = QtWidgets.QPushButton("Play")
@@ -49,12 +48,16 @@ class MainWidget(QtWidgets.QWidget):
         mainLayout = QtWidgets.QVBoxLayout(self)
 
         mainLayout.addWidget(title, alignment=QtCore.Qt.AlignmentFlag.AlignTop)
-        mainLayout.addLayout(keyboard)
+        mainLayout.addLayout(self.keyboard)
         buttonLayout = QtWidgets.QHBoxLayout()
         buttonLayout.addWidget(self.playAndStopButton)
         mainLayout.addLayout(buttonLayout)
         mainLayout.addSpacing(30)
         mainLayout.addWidget(bottom, alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
+
+        # Connect elements
+        self.playAndStopButton.clicked.connect(self.onplayAndStopButtonClick) # Play/Stop button
+        self.keyboard.keyPressed.connect(self.updateButtonStatus) # Keyboard
 
 
     """
@@ -70,38 +73,43 @@ class MainWidget(QtWidgets.QWidget):
         else:
             self.stopRebinding()
 
-    """
-    Called by "onplayAndStopButtonClick" when the play button is clicked.
-    
-    It checks the input fields for validity and starts the rebinding process.
-    Disable the input fields and changes the button text to "Stop".
-    """
+        # Change the button type
+        self.isPlayButton = not self.isPlayButton
+
+    def updateButtonStatus(self, isPlayable):
+        if isPlayable:
+            self.playAndStopButton.setDisabled(False)
+        else:
+            self.playAndStopButton.setDisabled(True)
+
+
     def playRebinding(self):
-        # Rebind the keys
-        try:
-            self.remap = keyboard.remap_key(self.keyToRebindField.text(), self.newKeyBindField.text())
-        except Exception as e:
-            self.createAndShowPopup(PopupTypes.Error, "Error on button click, the keybinds are invalid:", e)
-            return
-
-        # Set the stop rebinding key to unbind the keys
-        try:
-            self.stopHotkeyEvent = keyboard.hook_key(self.stopRebindingKeyField.text(), self.stopRebinding,
-                                                     suppress=True)
-        except ValueError as e:
-            if e == "Can only normalize non-empty string names. Unexpected ''":
-                self.createAndShowPopup(PopupTypes.Error,
-                                        "Error on button click, the keybind to stop the rebinding is empty:", Exception(e))
-                return
-
-        self.keyToRebindField.setDisabled(True)
-        self.newKeyBindField.setDisabled(True)
-        self.stopRebindingKeyField.setDisabled(True)
-
-        self.playAndStopButton.setText("Stop")
-        self.isPlayButton = False
-
-        self.window().showMinimized()
+        self.keyboard.playRebinding()
+        # # Rebind the keys
+        # try:
+        #     self.remap = keyboard.remap_key(self.keyToRebindField.text(), self.newKeyBindField.text())
+        # except Exception as e:
+        #     self.createAndShowPopup(PopupTypes.Error, "Error on button click, the keybinds are invalid:", e)
+        #     return
+        #
+        # # Set the stop rebinding key to unbind the keys
+        # try:
+        #     self.stopHotkeyEvent = keyboard.hook_key(self.stopRebindingKeyField.text(), self.stopRebinding,
+        #                                              suppress=True)
+        # except ValueError as e:
+        #     if e == "Can only normalize non-empty string names. Unexpected ''":
+        #         self.createAndShowPopup(PopupTypes.Error,
+        #                                 "Error on button click, the keybind to stop the rebinding is empty:", Exception(e))
+        #         return
+        #
+        # self.keyToRebindField.setDisabled(True)
+        # self.newKeyBindField.setDisabled(True)
+        # self.stopRebindingKeyField.setDisabled(True)
+        #
+        # self.playAndStopButton.setText("Stop")
+        # self.isPlayButton = False
+        #
+        # self.window().showMinimized()
 
     """
     Called by "onplayAndStopButtonClick" when the stop button is clicked.
@@ -109,27 +117,28 @@ class MainWidget(QtWidgets.QWidget):
     It unbinds the keys and re-enables the input fields.
     """
     def stopRebinding(self, event=None):
-        if hasattr(self, 'stopHotkeyEvent'):
-            keyboard.unhook_key(self.stopHotkeyEvent)
-            del self.stopHotkeyEvent
-
-        try:
-            keyboard.unhook(self.remap)
-            del self.remap
-        except Exception as e:
-            print("Error while trying to unhook the keybinds: ", file=sys.stderr)
-            print(e, file=sys.stderr)
-            return
-
-        self.keyToRebindField.setDisabled(False)
-        self.newKeyBindField.setDisabled(False)
-        self.stopRebindingKeyField.setDisabled(False)
-
-        self.playAndStopButton.setText("Play")
-        self.isPlayButton = True
-
-        if self.window().isMinimized():
-            self.window().showNormal()
+        return
+        # if hasattr(self, 'stopHotkeyEvent'):
+        #     keyboard.unhook_key(self.stopHotkeyEvent)
+        #     del self.stopHotkeyEvent
+        #
+        # try:
+        #     keyboard.unhook(self.remap)
+        #     del self.remap
+        # except Exception as e:
+        #     print("Error while trying to unhook the keybinds: ", file=sys.stderr)
+        #     print(e, file=sys.stderr)
+        #     return
+        #
+        # self.keyToRebindField.setDisabled(False)
+        # self.newKeyBindField.setDisabled(False)
+        # self.stopRebindingKeyField.setDisabled(False)
+        #
+        # self.playAndStopButton.setText("Play")
+        # self.isPlayButton = True
+        #
+        # if self.window().isMinimized():
+        #     self.window().showNormal()
 
     """
     createAndShowPopup method creates and shows a popup dialog with the given type, title, and content.
@@ -161,53 +170,53 @@ class MainWidget(QtWidgets.QWidget):
 
         popup.show()
 
-    """
-    checkFields method checks the content of the input fields and adds hover effects if needed.
-    
-    It also disables the play button if the two main fields are empty.
-    """
-    def checkFields(self):
-        self.removeHover() # Remove all the hovers and re-applicate them if needed
-
-        # Check the field content
-        i = 0
-        for field in self.listOfFields:
-            if field.text() != "":
-                # Check if the key is correct
-                try:
-                    keyboard.key_to_scan_codes(field.text(), True)
-                except ValueError:
-                    self.addHover([field])
-                # Check if two keys aren't the same
-                for nextField in self.listOfFields[1+i:]:
-                    if field.text() == nextField.text():
-                        self.addHover([field, nextField])
-                i+=1
-
-        # Disable the play button if the two main fields are left empty
-        if self.keyToRebindField.text() == "" or self.newKeyBindField.text() == "":
-            self.playAndStopButton.setDisabled(True)
-
-
-    """
-    addHover method adds a hover effect to the specified fields and disables the play button.
-    """
-    def addHover(self, similarLabels : list):
-        # Background color
-        for similarLabel in similarLabels:
-            similarLabel.setStyleSheet("background-color: red")
-
-        # Disable the play button
-        self.playAndStopButton.setDisabled(True)
-
-
-    """
-    removeHover method removes the hover effect from all fields and re-enables the play button.
-    """
-    def removeHover(self):
-        # Remove hover and background in the fields
-        for elements in self.listOfFields:
-            elements.setStyleSheet("background-color: none")
-
-        # Re-enable the play button
-        self.playAndStopButton.setDisabled(False)
+    # """
+    # checkFields method checks the content of the input fields and adds hover effects if needed.
+    #
+    # It also disables the play button if the two main fields are empty.
+    # """
+    # def checkFields(self):
+    #     self.removeHover() # Remove all the hovers and re-applicate them if needed
+    #
+    #     # Check the field content
+    #     i = 0
+    #     for field in self.listOfFields:
+    #         if field.text() != "":
+    #             # Check if the key is correct
+    #             try:
+    #                 keyboard.key_to_scan_codes(field.text(), True)
+    #             except ValueError:
+    #                 self.addHover([field])
+    #             # Check if two keys aren't the same
+    #             for nextField in self.listOfFields[1+i:]:
+    #                 if field.text() == nextField.text():
+    #                     self.addHover([field, nextField])
+    #             i+=1
+    #
+    #     # Disable the play button if the two main fields are left empty
+    #     if self.keyToRebindField.text() == "" or self.newKeyBindField.text() == "":
+    #         self.playAndStopButton.setDisabled(True)
+    #
+    #
+    # """
+    # addHover method adds a hover effect to the specified fields and disables the play button.
+    # """
+    # def addHover(self, similarLabels : list):
+    #     # Background color
+    #     for similarLabel in similarLabels:
+    #         similarLabel.setStyleSheet("background-color: red")
+    #
+    #     # Disable the play button
+    #     self.playAndStopButton.setDisabled(True)
+    #
+    #
+    # """
+    # removeHover method removes the hover effect from all fields and re-enables the play button.
+    # """
+    # def removeHover(self):
+    #     # Remove hover and background in the fields
+    #     for elements in self.listOfFields:
+    #         elements.setStyleSheet("background-color: none")
+    #
+    #     # Re-enable the play button
+    #     self.playAndStopButton.setDisabled(False)
