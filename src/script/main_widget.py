@@ -27,8 +27,6 @@ class MainWidget(QtWidgets.QWidget):
 
         # Window settings
         self.setWindowTitle("Rebinder V0.3")
-        self.setFixedWidth(400)  # Adjust the width as needed
-        self.setFixedHeight(400)
         self.setStyleSheet("background-color: #0c0c0b;")
 
         # Generic widget text
@@ -76,6 +74,15 @@ class MainWidget(QtWidgets.QWidget):
         # Change the button type
         self.isPlayButton = not self.isPlayButton
 
+    """
+    updateButtonStatus method updates the status of the play/stop button based on whether the keys are playable.
+    
+    If the keys are playable, it enables the button; otherwise, it disables it.
+    
+    Args:
+        isPlayable (bool): Indicates whether the keys are playable or not.
+        
+    """
     def updateButtonStatus(self, isPlayable):
         if isPlayable:
             self.playAndStopButton.setDisabled(False)
