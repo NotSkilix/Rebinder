@@ -6,9 +6,12 @@ from .key import Key
 from .type_def import KeyStatus, KeyStyle
 
 keys = [
-    ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
-    ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
-    ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
+    ['ESC', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'PRTSC', 'SCRLK', 'PAUSE'],
+    ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'BACKSPACE', 'INSERT', 'HOME', 'PAGEUP'],
+    ['TAB', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']', '\\', 'DELETE', 'END', 'PAGEDOWN'],
+    ['CAPSLOCK', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', '\'', 'ENTER'],
+    ['LSHIFT', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', 'RSHIFT', 'UP'],
+    ['LCTRL', 'LWIN', 'LALT', 'SPACE', 'RALT', 'RWIN', 'MENU', 'RCTRL', 'LEFT', 'DOWN', 'RIGHT']
 ]
 
 class KeyboardManager(QtWidgets.QGridLayout):

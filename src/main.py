@@ -3,8 +3,6 @@ import sys
 from script.main_widget import MainWidget, QtWidgets
 
 def main():
-    print("Executing...")
-
     app = QtWidgets.QApplication([])
 
     widget = MainWidget()
