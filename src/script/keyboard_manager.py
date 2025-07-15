@@ -32,10 +32,18 @@ class KeyboardManager(QtWidgets.QGridLayout):
     """
     keyPressed = QtCore.Signal(bool)
 
+    """
+    Signal emitted when the stop key is pressed.
+    """
+    stopKeyPressed = QtCore.Signal()
 
+    """
+    Constructor for KeyboardManager.
+    """
     def __init__(self):
         super().__init__()
 
+        # Create the keyboard
         for row, key_row in enumerate(keys):
             for col, key in enumerate(key_row):
                 button = Key(key)
@@ -137,5 +145,79 @@ class KeyboardManager(QtWidgets.QGridLayout):
         # Return true if all the checks worked
         return True
 
+    """
+    playRebinding method starts the rebinding process by getting the keys to change, new key, and stop key.
+    
+    It then remaps the keys and binds the stop key to stop the rebinding process.
+    Also disables the keys from being pressed during the rebinding process.
+    
+    Raises:
+        Exception: If the remapping or binding fails.
+    """
     def playRebinding(self):
-        print("running")
+        # Get the keys
+        toChangeKey = None
+        newKey = None
+        stopKey = None
+
+        for key, value in self.__toggledKeys.items():
+            value = KeyStatus(value)
+            if value == KeyStatus.keyToChange:
+                toChangeKey = key
+            elif value == KeyStatus.newKey:
+                newKey = key
+            elif value == KeyStatus.stopKey:
+                stopKey = key
+            else:
+                print(f"Key '{key}' has an invalid status: {value.name}", file=sys.stderr)
+
+        # Rebind the two main keys (Throws an exception on failure)
+        self.remap = keyboard.remap_key(toChangeKey, newKey)
+
+        # Bind the stop key (Throws an exception on failure)
+        if stopKey is not None:
+            self.stopHotkeyEvent = keyboard.hook_key(stopKey, self.__emitStopKeySignal, True)
+
+        # Disable the keys from being pressed
+        self.__disableKeys(True)
+
+    """
+    emitStopKeySignal method emits the stopKeyPressed signal.
+    """
+    def __emitStopKeySignal(self, event=None):
+        self.stopKeyPressed.emit()
+
+    """
+    stopRebinding method stops the rebinding process by unhooking the play/stop key and the remapped keys.
+    
+    It also enables the keys back in the keyboard layout.
+    
+    Args:
+        event (optional): The event that triggered the stop rebinding. Defaults to None.
+    """
+    def stopRebinding(self):
+        # Enable the keys back
+        self.__disableKeys(False)
+
+        # Unhook the play/stop key
+        if hasattr(self, 'stopHotkeyEvent'):
+            keyboard.unhook_key(self.stopHotkeyEvent)
+            del self.stopHotkeyEvent
+
+
+        # Unhook the keybinds
+        if hasattr(self, 'remap'):
+            keyboard.unhook(self.remap)
+            del self.remap
+
+    """
+    disableKeys method disables or enables all keys in the keyboard layout.
+    
+    Args:
+        value (bool): If True, disables the keys; if False, enables them.
+    """
+    def __disableKeys(self, value : bool):
+        for i in range(self.count()):
+            widget = self.itemAt(i).widget()
+            if isinstance(widget, Key):
+                widget.setDisabled(value)
