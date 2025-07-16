@@ -26,10 +26,10 @@ class MainWidget(QtWidgets.QWidget):
         self.setStyleSheet("background-color: #1E1E1E;")
 
         # Generic widget text
-        title = QtWidgets.QLabel("Rebinder", alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
+        title = QtWidgets.QLabel("Press your keys", alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
         title.setFont(QtGui.QFont("Arial", 24))
-        bottom = QtWidgets.QLabel("Made with ❤ by NotSkilix", alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
-        bottom.setFont(QtGui.QFont("Arial", 11))
+        subtitle = QtWidgets.QLabel("You can press multiple time the same key to change its purpose", alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
+        subtitle.setFont(QtGui.QFont("Arial", 11))
 
         # Keyboard Grid
         self.keyboard = KeyboardManager()
@@ -42,12 +42,12 @@ class MainWidget(QtWidgets.QWidget):
         mainLayout = QtWidgets.QVBoxLayout(self)
 
         mainLayout.addWidget(title, alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+        mainLayout.addWidget(subtitle, alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
         mainLayout.addLayout(self.keyboard)
         buttonLayout = QtWidgets.QHBoxLayout()
         buttonLayout.addWidget(self.playAndStopButton)
         mainLayout.addLayout(buttonLayout)
         mainLayout.addSpacing(30)
-        mainLayout.addWidget(bottom, alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
 
         # Connect elements
         self.playAndStopButton.clicked.connect(self.onplayAndStopButtonClick) # Play/Stop button
