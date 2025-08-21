@@ -84,7 +84,7 @@ class KeyboardManager(QtWidgets.QGridLayout):
     """
     def __updateKeyStatus(self, keyPressed):
         if self.__toggledKeys.get(keyPressed) is None:
-            self.__toggledKeys[keyPressed] = KeyStatus.keyToChange.value
+            self.__toggledKeys[keyPressed] = KeyStatus.KEY_TO_CHANGE.value
         elif self.__toggledKeys.get(keyPressed) == 3:
             self.__toggledKeys.pop(keyPressed)
         else:
@@ -106,7 +106,7 @@ class KeyboardManager(QtWidgets.QGridLayout):
                     if pressedKey == widget.text():
                         for style in KeyStyle:
                             if style.name == KeyStatus(status).name:
-                                widget.setStyleSheet(style.value)
+                                widget.setStyleSheet(style)
 
     """
     areKeyCorrect method checks if the keys in __toggledKeys are valid and meet the required status.
@@ -131,8 +131,8 @@ class KeyboardManager(QtWidgets.QGridLayout):
                         return False
 
             status = KeyStatus(currentValue)
-            if (status == KeyStatus.keyToChange
-                    or status == KeyStatus.newKey):
+            if (status == KeyStatus.KEY_TO_CHANGE
+                    or status == KeyStatus.NEW_KEY):
                 currentRequiredStatus = currentRequiredStatus+1
 
             # Check if the key exist
@@ -167,11 +167,11 @@ class KeyboardManager(QtWidgets.QGridLayout):
 
         for key, value in self.__toggledKeys.items():
             value = KeyStatus(value)
-            if value == KeyStatus.keyToChange:
+            if value == KeyStatus.KEY_TO_CHANGE:
                 toChangeKey = key
-            elif value == KeyStatus.newKey:
+            elif value == KeyStatus.NEW_KEY:
                 newKey = key
-            elif value == KeyStatus.stopKey:
+            elif value == KeyStatus.STOP_KEY:
                 stopKey = key
             else:
                 print(f"Key '{key}' has an invalid status: {value.name}", file=sys.stderr)

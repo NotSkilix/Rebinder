@@ -92,7 +92,7 @@ class MainWidget(QtWidgets.QWidget):
         try:
             self.keyboard.playRebinding()
         except Exception as e:
-            self.createAndShowPopup(PopupTypes.Error, "Error on button click, the keybinds are invalid:", e)
+            self.createAndShowPopup(PopupTypes.ERROR, "Error on button click, the keybinds are invalid:", e)
             return
 
         self.playAndStopButton.setText("Stop")
@@ -113,7 +113,7 @@ class MainWidget(QtWidgets.QWidget):
         try:
             self.keyboard.stopRebinding()
         except Exception as e:
-            self.createAndShowPopup(PopupTypes.Error, "Error while trying to unhook the keybinds", e)
+            self.createAndShowPopup(PopupTypes.ERROR, "Error while trying to unhook the keybinds", e)
             return
 
         self.playAndStopButton.setText("Play")
@@ -138,7 +138,7 @@ class MainWidget(QtWidgets.QWidget):
     def createAndShowPopup(self, type : PopupTypes, title: str, content : Exception):
         popup = QtWidgets.QDialog(self)
 
-        if type == PopupTypes.Error:
+        if type == PopupTypes.ERROR:
             popup.setWindowTitle("Error")
 
         titleLabel = QtWidgets.QLabel(title)

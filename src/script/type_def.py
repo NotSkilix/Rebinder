@@ -3,29 +3,29 @@ from enum import Enum
 
 
 class PopupTypes(Enum):
-    Error = 1
-    Info = 2
+    ERROR = 1
+    INFO = 2
 
 """
 Enumeration for the type of keys, the one with and without images.
 """
 class KeyType(Enum):
-    hasImage = 1
-    default = 2
+    HAS_IMAGE = 1
+    DEFAULT = 2
 
 """
 Enumeration for the status of a key in the keyboard.
 """
 class KeyStatus(Enum):
-    keyToChange = 1
-    newKey = 2
-    stopKey = 3
+    KEY_TO_CHANGE = 1
+    NEW_KEY = 2
+    STOP_KEY = 3
 
 """
 Enumeration for the style of keys in the keyboard.
 """
 class KeyStyle(Enum):
-    default = """
+    DEFAULT = """
                 color: black;
                 font-size: 16px;
                 font-weight: bold;
@@ -36,7 +36,7 @@ class KeyStyle(Enum):
                 padding: 4px 0px;
                 margin: 2px;
               """
-    keyToChange = """
+    KEY_TO_CHANGE = """
                     color: black;
                     font-size: 16px;
                     font-weight: bold;
@@ -45,14 +45,10 @@ class KeyStyle(Enum):
                     background: #A15EC0;
                     box-shadow: 0px 2px 2px #A15EC0;
                     padding: 4px 0px;
-                    min-width: 44px;
-                    min-height: 34px;
-                    max-width: 44px;
-                    max-height: 34px;
                     margin: 2px;
                     background-color: #A15EC0
                   """
-    newKey = """
+    NEW_KEY = """
                 color: black;
                 font-size: 16px;
                 font-weight: bold;
@@ -64,7 +60,7 @@ class KeyStyle(Enum):
                 margin: 2px;
                 background-color: #6AC05E
              """
-    stopKey = """
+    STOP_KEY = """
                 color: black;
                 font-size: 16px;
                 font-weight: bold;
