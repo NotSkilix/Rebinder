@@ -4,17 +4,17 @@
 ---
 
 ## Introduction
-A small python project that allows the user to rebind a key to an another one. \
+A small python project that allows the user to rebind a key to another one. \
 Its main role is to fix issues such as "my 'F' keys are broken" etc...
 
 Also contains a little interface for the user.
 
 ## Project Setup (user)
-**⚠️ Currently, the application is only available throught the GitHub [Release](https://github.com/NotSkilix/Rebinder/releases) page of this project, there is no other way to download this application ⚠️**.
+**⚠️ Currently, the application is only available through the GitHub [Release](https://github.com/NotSkilix/Rebinder/releases) page of this project, there is no other way to download this application ⚠️**.
 
 You will be able to download the most recent version of the project by going to the bottom of the release text that contains the "latest" tag, like seen below: \
 ![image](https://github.com/user-attachments/assets/92deb5d8-20a2-47e2-a333-7493305b557c) \
-In the end of the text explaining whats new to this version and what is set for the next one, you'll be able to find the `.exe` file, download it and run it. 
+In the end of the text explaining what's new to this version and what is set for the next one, you'll be able to find the `.exe` file, download it and run it. 
 
 > Your antivirus might find this program dangerous and even try to block it. It is not a malware, the code is open source as you know \
 > Note that build is only available since the version 0.3 and higher
@@ -33,7 +33,7 @@ https://github.com/NotSkilix/Rebinder.git
 
 ### Install the requirements
 #### Virtual environment
-Its recomended to create a virtual environment before installing the requirements. \
+It's recommended to create a virtual environment before installing the requirements. \
 
 You can either do this manually: \
 To do so, you can use the following command:

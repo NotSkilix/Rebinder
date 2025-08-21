@@ -135,10 +135,10 @@ class MainWidget(QtWidgets.QWidget):
         title (str): The title of the popup.
         content (Exception): The content to be displayed in the popup.
     """
-    def createAndShowPopup(self, type : PopupTypes, title: str, content : Exception):
+    def createAndShowPopup(self, popupType : PopupTypes, title: str, content : Exception):
         popup = QtWidgets.QDialog(self)
 
-        if type == PopupTypes.ERROR:
+        if popupType == PopupTypes.ERROR:
             popup.setWindowTitle("Error")
 
         titleLabel = QtWidgets.QLabel(title)
