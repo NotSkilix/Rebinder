@@ -1,5 +1,5 @@
 from typing import override
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtWidgets
 
 from .type_def import KeyType, KeyStyle, KeySize
 
