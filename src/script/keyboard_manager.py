@@ -2,8 +2,8 @@ import keyboard
 import sys
 from PySide6 import QtWidgets, QtCore
 
-from .key import Key
-from .type_def import KeyStatus, KeyStyle
+from src.script.key import Key
+from src.types.type_def import KeyStatus, KeyStyle
 
 keys = [
     ['ESC', '', 'F1', 'F2', 'F3', 'F4', '', 'F5', 'F6', 'F7', 'F8', '', 'F9', 'F10', 'F11', 'F12', '', 'PRTSC', 'SCRLK', 'PAUSE'],
