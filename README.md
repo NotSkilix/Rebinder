@@ -49,10 +49,16 @@ Or if you have PyCharm from JetBrains, you can create a virtual environment dire
 To do so, go to `File > Settings > Project: Rebinder > Python Interpreter` and select the option to create a new virtual environment. \
 Then, select the location of the virtual environment and click on `OK`. 
 
-#### The rest
+#### The requirements
 Once the virtual environment is created (or not if you want it to be installed globally), you can install the requirements using the following command:
 ```bash
 pip install -r requirements.txt
 ```
 
 You are now ready to run the project. 
+
+#### Run the project
+You can now run the project with the following command in your venv;
+```py
+python3 main.py
+```
