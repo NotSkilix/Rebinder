@@ -2,7 +2,8 @@
   "keyboards":
   [
     {
-      "name": "ANSI QWERTY",
+      "type" : "QWERTY",
+      "size": "FULL",
       "layout": [
         [
           {

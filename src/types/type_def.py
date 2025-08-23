@@ -1,6 +1,14 @@
+"""
+This module contains type definitions and enumerations used in the keyboard application.
+"""
+
 from PySide6 import QtCore
 from enum import Enum
 
+"""
+Path to the JSON file containing keyboard layouts.
+"""
+KEYBOARD_LAYOUT_PATH = "src/data/keyboard_layouts.json"
 
 class PopupTypes(Enum):
     ERROR = 1
