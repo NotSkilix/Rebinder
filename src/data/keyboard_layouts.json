@@ -3,12 +3,12 @@
   [
     {
       "type" : "QWERTY",
-      "size": "FULL",
+      "size": "TKL",
       "layout": [
         [
           {
             "key": "ESC",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "",
@@ -16,19 +16,19 @@
           },
           {
             "key": "F1",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "F2",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "F3",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "F4",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "",
@@ -36,19 +36,19 @@
           },
           {
             "key": "F5",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "F6",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "F7",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "F8",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "",
@@ -56,19 +56,19 @@
           },
           {
             "key": "F9",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "F10",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "F11",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "F12",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "",
@@ -76,309 +76,309 @@
           },
           {
             "key": "PRTSC",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "SCRLK",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "PAUSE",
-            "size": ""
+            "size": "BASIC"
           }
         ],
         [
           {
             "key": "`",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "1",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "2",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "3",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "4",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "5",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "6",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "7",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "8",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "9",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "0",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "-",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "=",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "BACKSPACE",
-            "size": ""
+            "size": "CAPS_LOCK_BACKSPACE"
           },
           {
             "key": "INSERT",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "HOME",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "PAGEUP",
-            "size": ""
+            "size": "BASIC"
           }
         ],
         [
           {
             "key": "TAB",
-            "size": ""
+            "size": "TAB"
           },
           {
             "key": "Q",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "W",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "E",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "R",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "T",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "Y",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "U",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "I",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "O",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "P",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "[",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "]",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "\\",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "DELETE",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "END",
-            "size": ""
+            "size": "BASIC"
           },
           {
             "key": "PAGEDOWN",
-            "size": ""
+            "size": "BASIC"
           }
         ],
         [
             {
               "key": "CAPSLOCK",
-              "size": ""
+              "size": "CAPS_LOCK_BACKSPACE"
             },
             {
               "key": "A",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "S",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "D",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "F",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "G",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "H",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "J",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "K",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "L",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": ";",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "'",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "ENTER",
-              "size": ""
+              "size": "LEFT_SHIFT_ENTER_NUMPAD_0"
             }
           ],
         [
             {
               "key": "LSHIFT",
-              "size": ""
+              "size": "LEFT_SHIFT_ENTER_NUMPAD_0"
             },
             {
               "key": "Z",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "X",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "C",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "V",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "B",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "N",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "M",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": ",",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": ".",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "/",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "RSHIFT",
-              "size": ""
+              "size": "RIGHT_SHIFT"
             },
             {
               "key": "UP",
-              "size": ""
+              "size": "BASIC"
             }
           ],
         [
             {
               "key": "LCTRL",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "LWIN",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "LALT",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "SPACE",
-              "size": ""
+              "size": "SPACE"
             },
             {
               "key": "RALT",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "RWIN",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "MENU",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "RCTRL",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "LEFT",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "DOWN",
-              "size": ""
+              "size": "BASIC"
             },
             {
               "key": "RIGHT",
-              "size": ""
+              "size": "BASIC"
             }
           ]
       ]
