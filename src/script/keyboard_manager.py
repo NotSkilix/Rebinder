@@ -4,7 +4,7 @@ import json
 from PySide6 import QtWidgets, QtCore
 
 from src.script.key import Key
-from src.types.type_def import KeyStatus, KeyStyle, KEYBOARD_LAYOUT_PATH
+from src.types.type_def import KeyStatus, KeyStyle, KeySize, KEYBOARD_LAYOUT_PATH
 
 KEYBOARD_TYPE = "QWERTY"
 KEYBOARD_SIZE = "FULL"
@@ -54,11 +54,14 @@ class KeyboardManager(QtWidgets.QGridLayout):
                         col=0
                         for j in keyboardLayout[row]:
                             key = j["key"]
-                            #size = j["size"]
-                            button = Key(key)
+                            size = j["size"]
+
 
                             if key != "":
+                                button = Key(key, keySize=KeySize[size])
                                 button.clicked.connect(lambda _, k=key: self.__onButtonClick(k))
+                            else:
+                                button = Key(key)
 
                             self.addWidget(button, row, col)
                             col+=1
