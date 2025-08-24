@@ -1,18 +1,14 @@
 import keyboard
 import sys
+import json
 from PySide6 import QtWidgets, QtCore
 
-from .key import Key
-from .type_def import KeyStatus, KeyStyle
+from src.script.key import Key
+from src.types.type_def import KeyStatus, KeyStyle, KeySize, KEYBOARD_LAYOUT_PATH
 
-keys = [
-    ['ESC', '', 'F1', 'F2', 'F3', 'F4', '', 'F5', 'F6', 'F7', 'F8', '', 'F9', 'F10', 'F11', 'F12', '', 'PRTSC', 'SCRLK', 'PAUSE'],
-    ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'BACKSPACE', 'INSERT', 'HOME', 'PAGEUP'],
-    ['TAB', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']', '\\', 'DELETE', 'END', 'PAGEDOWN'],
-    ['CAPSLOCK', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', '\'', 'ENTER'],
-    ['LSHIFT', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', 'RSHIFT', 'UP'],
-    ['LCTRL', 'LWIN', 'LALT', 'SPACE', 'RALT', 'RWIN', 'MENU', 'RCTRL', 'LEFT', 'DOWN', 'RIGHT']
-]
+KEYBOARD_TYPE = "QWERTY"
+KEYBOARD_SIZE = "FULL"
+KEYBOARD_LIST_NAME = "keyboards"
 
 class KeyboardManager(QtWidgets.QGridLayout):
     """
@@ -46,15 +42,29 @@ class KeyboardManager(QtWidgets.QGridLayout):
     def __init__(self):
         super().__init__()
 
-        # Create the keyboard
-        for row, key_row in enumerate(keys):
-            for col, key in enumerate(key_row):
-                button = Key(key)
+        # Read the KEYBOARD_LAYOUT_PATH.json for the first keyboard layout
+        with open(KEYBOARD_LAYOUT_PATH) as file:
+            jsonObject = json.load(file)
+            if jsonObject[KEYBOARD_LIST_NAME]:
+                keyboardList = jsonObject[KEYBOARD_LIST_NAME]
+                firstKeyboard = keyboardList[0] # Select the first keyboard for now
+                if firstKeyboard["type"] == KEYBOARD_TYPE:
+                    keyboardLayout = firstKeyboard["layout"]
+                    for row in range(len(keyboardLayout)):
+                        col=0
+                        for j in keyboardLayout[row]:
+                            key = j["key"]
+                            size = j["size"]
 
-                if key != "":
-                    button.clicked.connect(lambda _, k=key: self.__onButtonClick(k))
 
-                self.addWidget(button, row, col)
+                            if key != "":
+                                button = Key(key, keySize=KeySize[size])
+                                button.clicked.connect(lambda _, k=key: self.__onButtonClick(k))
+                            else:
+                                col+=1
+
+                            self.addWidget(button, row, col)
+                            col+=1
 
 
     """

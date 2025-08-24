@@ -1,7 +1,7 @@
 from PySide6 import QtCore, QtWidgets, QtGui
 
-from .type_def import PopupTypes
-from .keyboard_manager import KeyboardManager
+from src.types.type_def import PopupTypes
+from src.script.keyboard_manager import KeyboardManager
 
 """
 MainWidget class is the main widget of the rebinder application.
@@ -22,7 +22,7 @@ class MainWidget(QtWidgets.QWidget):
         super().__init__()
 
         # Window settings
-        self.setWindowTitle("Rebinder V0.3")
+        self.setWindowTitle("Rebinder V0.4")
         self.setStyleSheet("background-color: #1E1E1E;")
 
         # Generic widget text

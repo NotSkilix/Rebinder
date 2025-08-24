@@ -1,7 +1,7 @@
 from typing import override
 from PySide6 import QtWidgets
 
-from .type_def import KeyType, KeyStyle, KeySize
+from src.types.type_def import KeyType, KeyStyle, KeySize
 
 """
 Key class represents a key in the keyboard.
@@ -27,6 +27,7 @@ class Key(QtWidgets.QPushButton):
             self.setText(mainKey)
             self.setStyleSheet(KeyStyle.DEFAULT)
             self.__setSize()
+
     """
     resetStatus method resets the key's style to the default style.
     """
