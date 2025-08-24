@@ -61,7 +61,7 @@ class KeyboardManager(QtWidgets.QGridLayout):
                                 button = Key(key, keySize=KeySize[size])
                                 button.clicked.connect(lambda _, k=key: self.__onButtonClick(k))
                             else:
-                                button = Key(key)
+                                col+=1
 
                             self.addWidget(button, row, col)
                             col+=1
