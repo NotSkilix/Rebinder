@@ -42,29 +42,8 @@ class KeyboardManager(QtWidgets.QGridLayout):
     def __init__(self):
         super().__init__()
 
-        # Read the KEYBOARD_LAYOUT_PATH.json for the first keyboard layout
-        with open(KEYBOARD_LAYOUT_PATH) as file:
-            jsonObject = json.load(file)
-            if jsonObject[KEYBOARD_LIST_NAME]:
-                keyboardList = jsonObject[KEYBOARD_LIST_NAME]
-                firstKeyboard = keyboardList[0] # Select the first keyboard for now
-                if firstKeyboard["type"] == KEYBOARD_TYPE:
-                    keyboardLayout = firstKeyboard["layout"]
-                    for row in range(len(keyboardLayout)):
-                        col=0
-                        for j in keyboardLayout[row]:
-                            key = j["key"]
-                            size = j["size"]
-
-
-                            if key != "":
-                                button = Key(key, keySize=KeySize[size])
-                                button.clicked.connect(lambda _, k=key: self.__onButtonClick(k))
-                            else:
-                                col+=1
-
-                            self.addWidget(button, row, col)
-                            col+=1
+        # Set the layout to the default keyboard
+        self.__setLayout(KEYBOARD_TYPE,KEYBOARD_SIZE)
 
 
     """
@@ -236,3 +215,58 @@ class KeyboardManager(QtWidgets.QGridLayout):
             widget = self.itemAt(i).widget()
             if isinstance(widget, Key):
                 widget.setDisabled(value)
+
+    """
+    setLayout method sets the keyboard layout based on the specified type and size.
+    
+    Args:
+        keyboardType (str): The type of keyboard layout to set (e.g., "QWERTY").
+        keyboardSize (str): The size of the keyboard layout to set (e.g., "FULL").
+    Raises:
+        ValueError: If no layout is found for the specified type and size.
+    """
+    def __setLayout(self, keyboardType, keyboardSize):
+        layout = self.__getLayout("keyboardType", keyboardSize)
+
+        if layout is not None:
+            for row in range(len(layout)):
+                col=0
+                for j in layout[row]:
+                    key = j["key"]
+                    size = j["size"]
+
+
+                    if key != "":
+                        button = Key(key, keySize=KeySize[size])
+                        button.clicked.connect(lambda _, k=key: self.__onButtonClick(k))
+                    else:
+                        col+=1
+
+                    self.addWidget(button, row, col)
+                    col+=1
+        else:
+            print(f"No layout {keyboardType} ({keyboardSize})", file=sys.stderr)
+            # raise ValueError(f"No layout {keyboardType} ({keyboardSize})")
+
+    """
+    getLayout method retrieves the keyboard layout from a JSON file based on the specified type and size.
+    
+    Args:
+        keyboardType (str): The type of keyboard layout to retrieve (e.g., "QWERTY").
+        keyboardSize (str): The size of the keyboard layout to retrieve (e.g., "FULL").    
+    Returns:
+        list or None: The keyboard layout if found, otherwise None.
+    """
+    def __getLayout(self, keyboardType, keyboardSize) -> list or None:
+        try:
+            with open(KEYBOARD_LAYOUT_PATH) as file:
+                jsonObject = json.load(file)
+                if jsonObject[KEYBOARD_LIST_NAME]:
+                    keyboardList = jsonObject[KEYBOARD_LIST_NAME]
+                    for keyboardElement in keyboardList:
+                        if keyboardElement["type"] == keyboardType and keyboardElement["size"] == keyboardSize:
+                            return keyboardElement["layout"]
+
+        except Exception as e:
+            print(f"Error reading keyboard layout file: \n      {e}", file=sys.stderr)
+        return None
