@@ -226,7 +226,7 @@ class KeyboardManager(QtWidgets.QGridLayout):
         ValueError: If no layout is found for the specified type and size.
     """
     def __setLayout(self, keyboardType, keyboardSize):
-        layout = self.__getLayout("keyboardType", keyboardSize)
+        layout = self.__getLayout(keyboardType, keyboardSize)
 
         if layout is not None:
             for row in range(len(layout)):

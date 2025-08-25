@@ -50,9 +50,9 @@ class MainWidget(QtWidgets.QWidget):
         mainLayout.addSpacing(30)
 
         # Connect elements
-        self.playAndStopButton.clicked.connect(self.onplayAndStopButtonClick) # Play/Stop button
-        self.keyboard.keyPressed.connect(self.updateButtonStatus) # Keyboard - when a button is pressed
-        self.keyboard.stopKeyPressed.connect(self.stopRebinding) # Keyboard - when the stop key is pressed
+        self.playAndStopButton.clicked.connect(self.__onplayAndStopButtonClick) # Play/Stop button
+        self.keyboard.keyPressed.connect(self.__updateButtonStatus) # Keyboard - when a button is pressed
+        self.keyboard.stopKeyPressed.connect(self.__stopRebinding) # Keyboard - when the stop key is pressed
 
 
     """
@@ -62,11 +62,11 @@ class MainWidget(QtWidgets.QWidget):
         - If the button is in play state, it calls the playRebinding method.
         - If the button is in stop state, it calls the stopRebinding method.
     """
-    def onplayAndStopButtonClick(self):
+    def __onplayAndStopButtonClick(self):
         if self.isPlayButton:
-            self.playRebinding()
+            self.__playRebinding()
         else:
-            self.stopRebinding()
+            self.__stopRebinding()
 
     """
     updateButtonStatus method updates the status of the play/stop button based on whether the keys are playable.
@@ -76,7 +76,7 @@ class MainWidget(QtWidgets.QWidget):
     Args:
         isPlayable (bool): Indicates whether the keys are playable or not.
     """
-    def updateButtonStatus(self, isPlayable):
+    def __updateButtonStatus(self, isPlayable):
         if isPlayable:
             self.playAndStopButton.setDisabled(False)
         else:
@@ -88,7 +88,7 @@ class MainWidget(QtWidgets.QWidget):
     
     It also changes the play/stop button text to "Stop" and minimizes the window.
     """
-    def playRebinding(self):
+    def __playRebinding(self):
         try:
             self.keyboard.playRebinding()
         except Exception as e:
@@ -108,7 +108,7 @@ class MainWidget(QtWidgets.QWidget):
     It also changes the play/stop button text and restores the window if it was minimized.
     If an error occurs while stopping the rebinding, it shows an error popup.
     """
-    def stopRebinding(self):
+    def __stopRebinding(self):
         # Stop the keyboard rebinding
         try:
             self.keyboard.stopRebinding()
