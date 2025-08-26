@@ -37,13 +37,17 @@ class KeyboardManager(QtWidgets.QGridLayout):
     stopKeyPressed = QtCore.Signal()
 
     """
+    List of available keyboard layouts and their sizes.
+    """
+    __layoutsAndSize = [()]
+
+    """
     Constructor for KeyboardManager.
     """
     def __init__(self):
         super().__init__()
 
-        # Set the layout to the default keyboard
-        self.__setLayout(KEYBOARD_TYPE,KEYBOARD_SIZE)
+        self.__layoutsAndSize = self.__fetchLayoutAndSize()
 
 
     """
@@ -225,7 +229,8 @@ class KeyboardManager(QtWidgets.QGridLayout):
     Raises:
         ValueError: If no layout is found for the specified type and size.
     """
-    def __setLayout(self, keyboardType, keyboardSize):
+    def setKeyboard(self, keyboardType, keyboardSize):
+        self.__clearGrid()
         layout = self.__getLayout(keyboardType, keyboardSize)
 
         if layout is not None:
@@ -270,3 +275,64 @@ class KeyboardManager(QtWidgets.QGridLayout):
         except Exception as e:
             print(f"Error reading keyboard layout file: \n      {e}", file=sys.stderr)
         return None
+
+    """
+    fetchLayoutAndSize method retrieves all keyboard layouts and their sizes from a JSON file.
+    
+    Returns:
+        list: A list of tuples containing keyboard layout types and their sizes.
+    """
+    def __fetchLayoutAndSize(self):
+        layouts = []
+        try:
+            with open(KEYBOARD_LAYOUT_PATH) as file:
+                jsonObject = json.load(file)
+                if jsonObject[KEYBOARD_LIST_NAME]:
+                    keyboardList = jsonObject[KEYBOARD_LIST_NAME]
+                    for keyboardElement in keyboardList:
+                        layouts.append((keyboardElement["type"], keyboardElement["size"]))
+                    return layouts
+
+        except Exception as e:
+            print(f"Error reading keyboard layout file: \n      {e}", file=sys.stderr)
+        return layouts
+
+    """
+    getAllLayouts method retrieves all unique keyboard layouts available.
+    
+    Returns:
+        list: A list of unique keyboard layout types.
+    """
+    def getAllLayouts(self):
+        elements = []
+        for key, value in self.__layoutsAndSize:
+            elements.append(key)
+        elements = list(set(elements))
+        return elements
+
+    """
+    getAvailableSizes method retrieves all available sizes for a given keyboard layout.
+    
+    Args:
+        layout (str): The keyboard layout type (e.g., "QWERTY").
+    Returns:
+        list: A list of available sizes for the specified layout.
+    """
+    def getAvailableSizes(self, layout):
+        elements = []
+        for key, value in self.__layoutsAndSize:
+            if key == layout:
+                elements.append(value)
+        elements = list(set(elements))
+        return elements
+
+    """
+    clearGrid method clears all widgets from the grid layout.
+    """
+    def __clearGrid(self):
+        print(self.count())
+        for i in range(self.count()):
+            item = self.takeAt(0)
+            widget = item.widget()
+            if widget is not None:
+                widget.deleteLater()

@@ -34,6 +34,15 @@ class MainWidget(QtWidgets.QWidget):
         # Keyboard Grid
         self.keyboard = KeyboardManager()
 
+        # Field selectors
+        self.layout = QtWidgets.QComboBox()
+        for layout in self.keyboard.getAllLayouts():
+            self.layout.addItem(layout)
+
+
+        self.sizeLayout = QtWidgets.QComboBox()
+        self.sizeLayout.hide()
+
         # Buttons
         self.playAndStopButton = QtWidgets.QPushButton("Play")
         self.playAndStopButton.setDisabled(True) # Disable it by default, will be re-enabled on first input
@@ -43,6 +52,8 @@ class MainWidget(QtWidgets.QWidget):
 
         mainLayout.addWidget(title, alignment=QtCore.Qt.AlignmentFlag.AlignTop)
         mainLayout.addWidget(subtitle, alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
+        mainLayout.addWidget(self.layout)
+        mainLayout.addWidget(self.sizeLayout)
         mainLayout.addLayout(self.keyboard)
         buttonLayout = QtWidgets.QHBoxLayout()
         buttonLayout.addWidget(self.playAndStopButton)
@@ -53,6 +64,8 @@ class MainWidget(QtWidgets.QWidget):
         self.playAndStopButton.clicked.connect(self.__onplayAndStopButtonClick) # Play/Stop button
         self.keyboard.keyPressed.connect(self.__updateButtonStatus) # Keyboard - when a button is pressed
         self.keyboard.stopKeyPressed.connect(self.__stopRebinding) # Keyboard - when the stop key is pressed
+        self.layout.currentTextChanged.connect(self.__onLayoutFieldChanged) # Layout selector
+        self.sizeLayout.currentTextChanged.connect(self.switchKeyboard) # Size selector
 
 
     """
@@ -155,3 +168,21 @@ class MainWidget(QtWidgets.QWidget):
         popup.setLayout(layout)
 
         popup.show()
+
+    """
+    onLayoutFieldChanged method is called when the layout field is changed.
+    """
+    def __onLayoutFieldChanged(self):
+        self.sizeLayout.hide()
+        self.sizeLayout.clear()
+        sizes = self.keyboard.getAvailableSizes(self.layout.currentText())
+        for size in sizes:
+            self.sizeLayout.addItem(size)
+        self.sizeLayout.show()
+
+
+    """
+    switchKeyboard method switches the keyboard layout and size based on the current selections.
+    """
+    def switchKeyboard(self):
+        self.keyboard.setKeyboard(self.layout.currentText(), self.sizeLayout.currentText())
