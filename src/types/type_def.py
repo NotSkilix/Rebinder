@@ -34,6 +34,7 @@ Enumeration for the style of keys in the keyboard.
 """
 class KeyStyle(Enum):
     DEFAULT = """
+            QPushButton {
                 color: black;
                 font-size: 16px;
                 font-weight: bold;
@@ -43,42 +44,82 @@ class KeyStyle(Enum):
                 box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
                 padding: 4px 0px;
                 margin: 2px;
+                border-bottom: 6px solid #999;
+            }
+            
+            QPushButton:pressed {
+                border-bottom: 2px solid #999;
+            }
+            
+            QPushButton:hover {
+                background: #b3b3b3;
+            }
               """
     KEY_TO_CHANGE = """
+                QPushButton {
                     color: black;
                     font-size: 16px;
                     font-weight: bold;
                     border-radius: 6px;
                     border: 1px solid #999;
                     background: #A15EC0;
-                    box-shadow: 0px 2px 2px #A15EC0;
                     padding: 4px 0px;
                     margin: 2px;
-                    background-color: #A15EC0
+                    background-color: #A15EC0;
+                    border-bottom: 6px solid #763993;
+                }
+                
+                QPushButton:pressed {
+                    border-bottom: 2px solid #763993;
+                }
+                
+                QPushButton:hover {
+                    background: #8540a5;
+                }
                   """
     NEW_KEY = """
-                color: black;
-                font-size: 16px;
-                font-weight: bold;
-                border-radius: 6px;
-                border: 1px solid #999;
-                background: #6AC05E;
-                box-shadow: 0px 2px 2px #6AC05E;
-                padding: 4px 0px;
-                margin: 2px;
-                background-color: #6AC05E
+                QPushButton {
+                    color: black;
+                    font-size: 16px;
+                    font-weight: bold;
+                    border-radius: 6px;
+                    border: 1px solid #999;
+                    background: #6AC05E;
+                    padding: 4px 0px;
+                    margin: 2px;
+                    background-color: #6AC05E;
+                    border-bottom: 6px solid #449339;
+                }
+                
+                QPushButton:pressed {
+                    border-bottom: 2px solid #449339;
+                }
+                
+                QPushButton:hover {
+                    background: #4ca540;
+                }
              """
     STOP_KEY = """
-                color: black;
-                font-size: 16px;
-                font-weight: bold;
-                border-radius: 6px;
-                border: 1px solid #999;
-                background: #D5681A;
-                box-shadow: 0px 2px 2px #D5681A;
-                padding: 4px 0px;
-                margin: 2px;
-                background-color: #D5681A
+                QPushButton {
+                    color: black;
+                    font-size: 16px;
+                    font-weight: bold;
+                    border-radius: 6px;
+                    border: 1px solid #999;
+                    background: #D5681A;
+                    padding: 4px 0px;
+                    margin: 2px;
+                    background-color: #D5681A;
+                    border-bottom: 4px solid #b65916;
+                }
+                
+                QPushButton:pressed {
+                    border-bottom: 2px solid #b65916;
+                }
+                
+                QPushButton:hover {
+                    background: #b65916;
+                }
               """
 
 class KeySize(Enum):
