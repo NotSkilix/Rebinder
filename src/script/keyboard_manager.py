@@ -58,7 +58,7 @@ class KeyboardManager(QtWidgets.QGridLayout):
 
 
                             if key != "":
-                                button = Key(key, keySize=KeySize["BASIC"])
+                                button = Key(key, keySize=KeySize[size])
                                 button.clicked.connect(lambda _, k=key: self.__onButtonClick(k))
                             else:
                                 col+=1
