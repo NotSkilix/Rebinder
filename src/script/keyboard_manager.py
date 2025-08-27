@@ -6,6 +6,18 @@ from PySide6 import QtWidgets, QtCore
 from src.script.key import Key
 from src.types.type_def import KeyStatus, KeyStyle, KeySize, KEYBOARD_LAYOUT_PATH, KEYBOARD_LIST_NAME, KEYBOARD_LAYOUT_SIZE_UPDATE
 
+"""
+KeyboardManager class manages the keyboard layout and key rebinding functionality.
+Inherits from QtWidgets.QGridLayout to create a grid layout for the keyboard keys.
+
+Attributes:
+    __toggledKeys (dict): Dictionary of toggled keys with their statuses.
+    __nbRequiredStatus (int): Minimum required status to run the application.
+    keyPressed (QtCore.Signal): Signal emitted when a key is pressed.
+    stopKeyPressed (QtCore.Signal): Signal emitted when the stop key is pressed.
+    __layoutsAndSize (list): List of available keyboard layouts and their sizes.
+    __timer (QtCore.QTimer): Timer to refresh the layouts and sizes every x ms
+"""
 class KeyboardManager(QtWidgets.QGridLayout):
     """
     Dictionary of toggled keys
