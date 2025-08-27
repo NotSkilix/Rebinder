@@ -36,6 +36,7 @@ class MainWidget(QtWidgets.QWidget):
 
         # Field selectors
         self.layout = QtWidgets.QComboBox()
+        self.layout.addItem("") # Populate the layout
         for layout in self.keyboard.getAllLayouts():
             self.layout.addItem(layout)
 
@@ -173,16 +174,39 @@ class MainWidget(QtWidgets.QWidget):
     onLayoutFieldChanged method is called when the layout field is changed.
     """
     def __onLayoutFieldChanged(self):
-        self.sizeLayout.hide()
+        # Update the content of the sizeLayout field
+        if self.layout.currentText() != "":
+            self.__populateSizeSelector(self.layout.currentText())
+        # Clear size layout when empty
+        else:
+            self.sizeLayout.hide()
+            self.keyboard.resetKeyboard()
+
+
+    """
+    populateSizeSelector method populates the size selector based on the selected layout.
+    
+    Args:
+        layout (str): The selected keyboard layout.
+    """
+    def __populateSizeSelector(self, layout):
         self.sizeLayout.clear()
-        sizes = self.keyboard.getAvailableSizes(self.layout.currentText())
+        self.sizeLayout.addItem("")
+        sizes = self.keyboard.getAvailableSizes(layout)
         for size in sizes:
             self.sizeLayout.addItem(size)
-        self.sizeLayout.show()
 
+        # Show it when its hidden
+        if self.sizeLayout.isHidden():
+            self.sizeLayout.show()
 
     """
     switchKeyboard method switches the keyboard layout and size based on the current selections.
+    
+    Called when the size selection is changed (connected).
     """
     def switchKeyboard(self):
-        self.keyboard.setKeyboard(self.layout.currentText(), self.sizeLayout.currentText())
+        self.keyboard.resetKeyboard()
+
+        if self.layout.currentText() != "" and self.sizeLayout.currentText() != "":
+            self.keyboard.setKeyboard(self.layout.currentText(), self.sizeLayout.currentText())

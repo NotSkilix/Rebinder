@@ -330,9 +330,15 @@ class KeyboardManager(QtWidgets.QGridLayout):
     clearGrid method clears all widgets from the grid layout.
     """
     def __clearGrid(self):
-        print(self.count())
         for i in range(self.count()):
             item = self.takeAt(0)
             widget = item.widget()
             if widget is not None:
                 widget.deleteLater()
+
+    """
+    resetKeyboard method resets the keyboard layout by clearing the grid and resetting the toggled keys.
+    """
+    def resetKeyboard(self):
+        self.__clearGrid()
+        self.__toggledKeys.clear()
