@@ -106,7 +106,7 @@ class MainWidget(QtWidgets.QWidget):
     """
     def __updateRebindingState(self, state : bool) -> None :
         # Play the rebinding
-        if state == True:
+        if state:
             try:
                 self.__keyboard.playRebinding()
             except Exception as e:
