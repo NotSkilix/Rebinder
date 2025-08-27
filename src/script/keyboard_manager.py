@@ -4,7 +4,7 @@ import json
 from PySide6 import QtWidgets, QtCore
 
 from src.script.key import Key
-from src.types.type_def import KeyStatus, KeyStyle, KeySize, KEYBOARD_LAYOUT_PATH, KEYBOARD_LIST_NAME
+from src.types.type_def import KeyStatus, KeyStyle, KeySize, KEYBOARD_LAYOUT_PATH, KEYBOARD_LIST_NAME, KEYBOARD_LAYOUT_SIZE_UPDATE
 
 class KeyboardManager(QtWidgets.QGridLayout):
     """
@@ -35,7 +35,12 @@ class KeyboardManager(QtWidgets.QGridLayout):
     """
     List of available keyboard layouts and their sizes.
     """
-    __layoutsAndSize = [()]
+    __layoutsAndSize = []
+
+    """
+    Timer to refresh the layouts and sizes every x ms.
+    """
+    __timer = QtCore.QTimer()
 
     """
     Constructor for KeyboardManager.
@@ -43,7 +48,11 @@ class KeyboardManager(QtWidgets.QGridLayout):
     def __init__(self):
         super().__init__()
 
-        self.__layoutsAndSize = self.__fetchLayoutAndSize()
+
+        self.__fetchLayoutAndSize()
+
+        self.__timer.timeout.connect(self.__fetchLayoutAndSize)
+        self.__timer.start(KEYBOARD_LAYOUT_SIZE_UPDATE)
 
 
     """
@@ -273,25 +282,26 @@ class KeyboardManager(QtWidgets.QGridLayout):
         return None
 
     """
-    fetchLayoutAndSize method retrieves all keyboard layouts and their sizes from a JSON file.
+    fetchLayoutAndSize method retrieves all keyboard layouts and their sizes from a JSON file
+    to update the '__layoutsAndSize' variable.
     
-    Returns:
-        list: A list of tuples containing keyboard layout types and their sizes.
+    Raises:
+        Exception: If there is an error reading the keyboard layout file.
     """
     def __fetchLayoutAndSize(self):
-        layouts = []
+        self.__layoutsAndSize.clear()
         try:
             with open(KEYBOARD_LAYOUT_PATH) as file:
                 jsonObject = json.load(file)
                 if jsonObject[KEYBOARD_LIST_NAME]:
                     keyboardList = jsonObject[KEYBOARD_LIST_NAME]
                     for keyboardElement in keyboardList:
-                        layouts.append((keyboardElement["type"], keyboardElement["size"]))
-                    return layouts
+                        self.__layoutsAndSize.append((keyboardElement["type"], keyboardElement["size"]))
+                    print(self.__layoutsAndSize)
 
         except Exception as e:
             print(f"Error reading keyboard layout file: \n      {e}", file=sys.stderr)
-        return layouts
+            # raise Exception(f"Error reading keyboard layout file: \n      {e}")
 
     """
     getAllLayouts method retrieves all unique keyboard layouts available.
