@@ -11,7 +11,7 @@ Attributes:
     isPlayButton (bool): Indicates whether the play button is currently active.
 """
 class MainWidget(QtWidgets.QWidget):
-    isPlayButton = True
+    __isPlayButton = True
 
     """
     Constructor for MainWidget.
@@ -32,41 +32,55 @@ class MainWidget(QtWidgets.QWidget):
         subtitle.setFont(QtGui.QFont("Arial", 11))
 
         # Keyboard Grid
-        self.keyboard = KeyboardManager()
+        self.__keyboard = KeyboardManager()
+
+        # Field selectors
+        self.__layoutComboBox = QtWidgets.QComboBox()
+        self.__layoutComboBox.addItem("") # Populate the layout
+        for layout in self.__keyboard.getAllLayouts():
+            self.__layoutComboBox.addItem(layout)
+
+
+        self.__sizeComboBox = QtWidgets.QComboBox()
+        self.__sizeComboBox.hide()
 
         # Buttons
-        self.playAndStopButton = QtWidgets.QPushButton("Play")
-        self.playAndStopButton.setDisabled(True) # Disable it by default, will be re-enabled on first input
+        self.__playAndStopButton = QtWidgets.QPushButton("Play")
+        self.__playAndStopButton.setDisabled(True) # Disable it by default, will be re-enabled on first input
 
         # 'Build' the widget
         mainLayout = QtWidgets.QVBoxLayout(self)
 
         mainLayout.addWidget(title, alignment=QtCore.Qt.AlignmentFlag.AlignTop)
         mainLayout.addWidget(subtitle, alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
-        mainLayout.addLayout(self.keyboard)
+        mainLayout.addWidget(self.__layoutComboBox)
+        mainLayout.addWidget(self.__sizeComboBox)
+        mainLayout.addLayout(self.__keyboard)
         buttonLayout = QtWidgets.QHBoxLayout()
-        buttonLayout.addWidget(self.playAndStopButton)
+        buttonLayout.addWidget(self.__playAndStopButton)
         mainLayout.addLayout(buttonLayout)
         mainLayout.addSpacing(30)
 
         # Connect elements
-        self.playAndStopButton.clicked.connect(self.onplayAndStopButtonClick) # Play/Stop button
-        self.keyboard.keyPressed.connect(self.updateButtonStatus) # Keyboard - when a button is pressed
-        self.keyboard.stopKeyPressed.connect(self.stopRebinding) # Keyboard - when the stop key is pressed
+        self.__playAndStopButton.clicked.connect(self.__onPlayOrStopTriggered) # Play/Stop button
+        self.__keyboard.keyPressed.connect(self.__updateButtonStatus) # Keyboard - when a button is pressed
+        self.__keyboard.stopKeyPressed.connect(self.__onPlayOrStopTriggered) # Keyboard - when the stop key is pressed
+        self.__layoutComboBox.currentTextChanged.connect(self.__onLayoutFieldChanged) # Layout selector
+        self.__sizeComboBox.currentTextChanged.connect(self.__switchKeyboard) # Size selector
 
 
     """
-    onplayAndStopButtonClick method is called when the play/stop button is clicked.
+    __onPlayOrStopTriggered method is called when the play/stop button is clicked or when the stop key is pressed.
     
     It checks the state of the button and either starts or stops the rebinding process.
-        - If the button is in play state, it calls the playRebinding method.
-        - If the button is in stop state, it calls the stopRebinding method.
+        - If the button is in play state, it runs the rebiding.
+        - Else the button is in stop state so it stops the rebinding.
     """
-    def onplayAndStopButtonClick(self):
-        if self.isPlayButton:
-            self.playRebinding()
+    def __onPlayOrStopTriggered(self) -> None:
+        if self.__isPlayButton:
+            self.__updateRebindingState(True)
         else:
-            self.stopRebinding()
+            self.__updateRebindingState(False)
 
     """
     updateButtonStatus method updates the status of the play/stop button based on whether the keys are playable.
@@ -76,55 +90,48 @@ class MainWidget(QtWidgets.QWidget):
     Args:
         isPlayable (bool): Indicates whether the keys are playable or not.
     """
-    def updateButtonStatus(self, isPlayable):
+    def __updateButtonStatus(self, isPlayable : bool) -> None:
         if isPlayable:
-            self.playAndStopButton.setDisabled(False)
+            self.__playAndStopButton.setDisabled(False)
         else:
-            self.playAndStopButton.setDisabled(True)
+            self.__playAndStopButton.setDisabled(True)
 
 
     """
-    playRebinding method starts the rebinding process by calling the keyboard's playRebinding method.
+    __updateRebindingState method updates the rebinding state of the keyboard by
+    either playing or stopping the rebinding according to the argument.
     
-    It also changes the play/stop button text to "Stop" and minimizes the window.
+    Args:
+        state (bool): True to start rebinding, False to stop rebinding.
     """
-    def playRebinding(self):
-        try:
-            self.keyboard.playRebinding()
-        except Exception as e:
-            self.createAndShowPopup(PopupTypes.ERROR, "Error on button click, the keybinds are invalid:", e)
-            return
+    def __updateRebindingState(self, state : bool) -> None :
+        # Play the rebinding
+        if state:
+            try:
+                self.__keyboard.playRebinding()
+            except Exception as e:
+                self.createAndShowPopup(PopupTypes.ERROR, "Error on button click, the keybinds are invalid:", e)
+                return
 
-        self.playAndStopButton.setText("Stop")
-        self.window().showMinimized()
+            self.__playAndStopButton.setText("Stop")
+            self.window().showMinimized()
 
-        # Change the button type
-        self.isPlayButton = not self.isPlayButton
-
-
-    """
-    stopRebinding method stops the rebinding process and resets the keyboard state.
-    
-    It also changes the play/stop button text and restores the window if it was minimized.
-    If an error occurs while stopping the rebinding, it shows an error popup.
-    """
-    def stopRebinding(self):
         # Stop the keyboard rebinding
-        try:
-            self.keyboard.stopRebinding()
-        except Exception as e:
-            self.createAndShowPopup(PopupTypes.ERROR, "Error while trying to unhook the keybinds", e)
-            return
+        else:
+            try:
+                self.__keyboard.stopRebinding()
+            except Exception as e:
+                self.createAndShowPopup(PopupTypes.ERROR, "Error while trying to unhook the keybinds", e)
+                return
 
-        self.playAndStopButton.setText("Play")
+            self.__playAndStopButton.setText("Play")
 
-        # Show back the window if it was minimized
-        if self.window().isMinimized():
-            self.window().showNormal()
+            # Show back the window if it was minimized
+            if self.window().isMinimized():
+                self.window().showNormal()
 
         # Change the button type
-        self.isPlayButton = not self.isPlayButton
-
+        self.__isPlayButton = not self.__isPlayButton
 
     """
     createAndShowPopup method creates and shows a popup dialog with the given type, title, and content.
@@ -135,7 +142,7 @@ class MainWidget(QtWidgets.QWidget):
         title (str): The title of the popup.
         content (Exception): The content to be displayed in the popup.
     """
-    def createAndShowPopup(self, popupType : PopupTypes, title: str, content : Exception):
+    def createAndShowPopup(self, popupType : PopupTypes, title: str, content : Exception) -> None:
         popup = QtWidgets.QDialog(self)
 
         if popupType == PopupTypes.ERROR:
@@ -155,3 +162,44 @@ class MainWidget(QtWidgets.QWidget):
         popup.setLayout(layout)
 
         popup.show()
+
+    """
+    onLayoutFieldChanged method is called when the layout field is changed.
+    """
+    def __onLayoutFieldChanged(self) -> None:
+        # Update the content of the sizeLayout field
+        if self.__layoutComboBox.currentText() != "":
+            self.__populateSizeSelector(self.__layoutComboBox.currentText())
+        # Clear size layout when empty
+        else:
+            self.__sizeComboBox.hide()
+            self.__keyboard.resetKeyboard()
+
+
+    """
+    populateSizeSelector method populates the size selector based on the selected layout.
+    
+    Args:
+        layout (str): The selected keyboard layout.
+    """
+    def __populateSizeSelector(self, layout : str) -> None:
+        self.__sizeComboBox.clear()
+        self.__sizeComboBox.addItem("")
+        sizes = self.__keyboard.getAvailableSizes(layout)
+        for size in sizes:
+            self.__sizeComboBox.addItem(size)
+
+        # Show it when its hidden
+        if self.__sizeComboBox.isHidden():
+            self.__sizeComboBox.show()
+
+    """
+    switchKeyboard method switches the keyboard layout and size based on the current selections.
+    
+    Called when the size selection is changed (connected).
+    """
+    def __switchKeyboard(self) -> None:
+        self.__keyboard.resetKeyboard()
+
+        if self.__layoutComboBox.currentText() != "" and self.__sizeComboBox.currentText() != "":
+            self.__keyboard.setKeyboard(self.__layoutComboBox.currentText(), self.__sizeComboBox.currentText())

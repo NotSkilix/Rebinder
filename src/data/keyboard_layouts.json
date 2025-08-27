@@ -382,6 +382,1264 @@
             }
           ]
       ]
+    },
+    {
+      "type" : "QWERTY",
+      "size": "FULL",
+      "layout": [
+        [
+          {
+            "key": "ESC",
+            "size": "BASIC"
+          },
+          {
+            "key": "F1",
+            "size": "BASIC"
+          },
+          {
+            "key": "F2",
+            "size": "BASIC"
+          },
+          {
+            "key": "F3",
+            "size": "BASIC"
+          },
+          {
+            "key": "F4",
+            "size": "BASIC"
+          },
+          {
+            "key": "F5",
+            "size": "BASIC"
+          },
+          {
+            "key": "F6",
+            "size": "BASIC"
+          },
+          {
+            "key": "F7",
+            "size": "BASIC"
+          },
+          {
+            "key": "F8",
+            "size": "BASIC"
+          },
+          {
+            "key": "F9",
+            "size": "BASIC"
+          },
+          {
+            "key": "F10",
+            "size": "BASIC"
+          },
+          {
+            "key": "F11",
+            "size": "BASIC"
+          },
+          {
+            "key": "F12",
+            "size": "BASIC"
+          },
+          {
+            "key": "PRTSC",
+            "size": "BASIC"
+          },
+          {
+            "key": "SCRLK",
+            "size": "BASIC"
+          },
+          {
+            "key": "PAUSE",
+            "size": "BASIC"
+          }
+        ],
+        [
+          {
+            "key": "`",
+            "size": "BASIC"
+          },
+          {
+            "key": "1",
+            "size": "BASIC"
+          },
+          {
+            "key": "2",
+            "size": "BASIC"
+          },
+          {
+            "key": "3",
+            "size": "BASIC"
+          },
+          {
+            "key": "4",
+            "size": "BASIC"
+          },
+          {
+            "key": "5",
+            "size": "BASIC"
+          },
+          {
+            "key": "6",
+            "size": "BASIC"
+          },
+          {
+            "key": "7",
+            "size": "BASIC"
+          },
+          {
+            "key": "8",
+            "size": "BASIC"
+          },
+          {
+            "key": "9",
+            "size": "BASIC"
+          },
+          {
+            "key": "0",
+            "size": "BASIC"
+          },
+          {
+            "key": "-",
+            "size": "BASIC"
+          },
+          {
+            "key": "=",
+            "size": "BASIC"
+          },
+          {
+            "key": "BACKSPACE",
+            "size": "CAPS_LOCK_BACKSPACE"
+          },
+          {
+            "key": "INSERT",
+            "size": "BASIC"
+          },
+          {
+            "key": "HOME",
+            "size": "BASIC"
+          },
+          {
+            "key": "PAGEUP",
+            "size": "BASIC"
+          },
+          {
+            "key": "NUMLK",
+            "size": "BASIC"
+          },
+          {
+            "key": "/",
+            "size": "BASIC"
+          },
+          {
+            "key": "*",
+            "size": "BASIC"
+          },
+          {
+            "key": "-",
+            "size": "BASIC"
+          }
+        ],
+        [
+          {
+            "key": "TAB",
+            "size": "TAB"
+          },
+          {
+            "key": "Q",
+            "size": "BASIC"
+          },
+          {
+            "key": "W",
+            "size": "BASIC"
+          },
+          {
+            "key": "E",
+            "size": "BASIC"
+          },
+          {
+            "key": "R",
+            "size": "BASIC"
+          },
+          {
+            "key": "T",
+            "size": "BASIC"
+          },
+          {
+            "key": "Y",
+            "size": "BASIC"
+          },
+          {
+            "key": "U",
+            "size": "BASIC"
+          },
+          {
+            "key": "I",
+            "size": "BASIC"
+          },
+          {
+            "key": "O",
+            "size": "BASIC"
+          },
+          {
+            "key": "P",
+            "size": "BASIC"
+          },
+          {
+            "key": "[",
+            "size": "BASIC"
+          },
+          {
+            "key": "]",
+            "size": "BASIC"
+          },
+          {
+            "key": "\\",
+            "size": "BASIC"
+          },
+          {
+            "key": "DELETE",
+            "size": "BASIC"
+          },
+          {
+            "key": "END",
+            "size": "BASIC"
+          },
+          {
+            "key": "PAGEDOWN",
+            "size": "BASIC"
+          },
+          {
+            "key": "7",
+            "size": "BASIC"
+          },
+          {
+            "key": "8",
+            "size": "BASIC"
+          },
+          {
+            "key": "9",
+            "size": "BASIC"
+          },
+          {
+            "key": "+",
+            "size": "LEFT_SHIFT_ENTER_NUMPAD_0"
+          }
+        ],
+        [
+          {
+            "key": "CAPSLOCK",
+            "size": "CAPS_LOCK_BACKSPACE"
+          },
+          {
+            "key": "A",
+            "size": "BASIC"
+          },
+          {
+            "key": "S",
+            "size": "BASIC"
+          },
+          {
+            "key": "D",
+            "size": "BASIC"
+          },
+          {
+            "key": "F",
+            "size": "BASIC"
+          },
+          {
+            "key": "G",
+            "size": "BASIC"
+          },
+          {
+            "key": "H",
+            "size": "BASIC"
+          },
+          {
+            "key": "J",
+            "size": "BASIC"
+          },
+          {
+            "key": "K",
+            "size": "BASIC"
+          },
+          {
+            "key": "L",
+            "size": "BASIC"
+          },
+          {
+            "key": ";",
+            "size": "BASIC"
+          },
+          {
+            "key": "'",
+            "size": "BASIC"
+          },
+          {
+            "key": "ENTER",
+            "size": "LEFT_SHIFT_ENTER_NUMPAD_0"
+          },
+          {
+            "key": "",
+            "size": ""
+          },
+          {
+            "key": "4",
+            "size": "BASIC"
+          },
+          {
+            "key": "5",
+            "size": "BASIC"
+          },
+          {
+            "key": "6",
+            "size": "BASIC"
+          }
+        ],
+        [
+          {
+            "key": "LSHIFT",
+            "size": "LEFT_SHIFT_ENTER_NUMPAD_0"
+          },
+          {
+            "key": "Z",
+            "size": "BASIC"
+          },
+          {
+            "key": "X",
+            "size": "BASIC"
+          },
+          {
+            "key": "C",
+            "size": "BASIC"
+          },
+          {
+            "key": "V",
+            "size": "BASIC"
+          },
+          {
+            "key": "B",
+            "size": "BASIC"
+          },
+          {
+            "key": "N",
+            "size": "BASIC"
+          },
+          {
+            "key": "M",
+            "size": "BASIC"
+          },
+          {
+            "key": ",",
+            "size": "BASIC"
+          },
+          {
+            "key": ".",
+            "size": "BASIC"
+          },
+          {
+            "key": "/",
+            "size": "BASIC"
+          },
+          {
+            "key": "RSHIFT",
+            "size": "RIGHT_SHIFT"
+          },
+          {
+            "key": "UP",
+            "size": "BASIC"
+          },
+          {
+            "key": "1",
+            "size": "BASIC"
+          },
+          {
+            "key": "2",
+            "size": "BASIC"
+          },
+          {
+            "key": "3",
+            "size": "BASIC"
+          },
+          {
+            "key": "ENTER",
+            "size": "LEFT_SHIFT_ENTER_NUMPAD_0"
+          }
+        ],
+        [
+          {
+            "key": "LCTRL",
+            "size": "BASIC"
+          },
+          {
+            "key": "LWIN",
+            "size": "BASIC"
+          },
+          {
+            "key": "LALT",
+            "size": "BASIC"
+          },
+          {
+            "key": "SPACE",
+            "size": "SPACE"
+          },
+          {
+            "key": "RALT",
+            "size": "BASIC"
+          },
+          {
+            "key": "RWIN",
+            "size": "BASIC"
+          },
+          {
+            "key": "MENU",
+            "size": "BASIC"
+          },
+          {
+            "key": "RCTRL",
+            "size": "BASIC"
+          },
+          {
+            "key": "LEFT",
+            "size": "BASIC"
+          },
+          {
+            "key": "DOWN",
+            "size": "BASIC"
+          },
+          {
+            "key": "RIGHT",
+            "size": "BASIC"
+          },
+          {
+            "key": "0",
+            "size": "BASIC"
+          },
+          {
+            "key": ".",
+            "size": "BASIC"
+          }
+        ]
+      ]
+    },
+    {
+      "type" : "AZERTY",
+      "size": "TKL",
+      "layout": [
+        [
+          {
+            "key": "ESC",
+            "size": "BASIC"
+          },
+          {
+            "key": "",
+            "size": ""
+          },
+          {
+            "key": "F1",
+            "size": "BASIC"
+          },
+          {
+            "key": "F2",
+            "size": "BASIC"
+          },
+          {
+            "key": "F3",
+            "size": "BASIC"
+          },
+          {
+            "key": "F4",
+            "size": "BASIC"
+          },
+          {
+            "key": "",
+            "size": ""
+          },
+          {
+            "key": "F5",
+            "size": "BASIC"
+          },
+          {
+            "key": "F6",
+            "size": "BASIC"
+          },
+          {
+            "key": "F7",
+            "size": "BASIC"
+          },
+          {
+            "key": "F8",
+            "size": "BASIC"
+          },
+          {
+            "key": "",
+            "size": ""
+          },
+          {
+            "key": "F9",
+            "size": "BASIC"
+          },
+          {
+            "key": "F10",
+            "size": "BASIC"
+          },
+          {
+            "key": "F11",
+            "size": "BASIC"
+          },
+          {
+            "key": "F12",
+            "size": "BASIC"
+          },
+          {
+            "key": "",
+            "size": ""
+          },
+          {
+            "key": "PRTSC",
+            "size": "BASIC"
+          },
+          {
+            "key": "SCRLK",
+            "size": "BASIC"
+          },
+          {
+            "key": "PAUSE",
+            "size": "BASIC"
+          }
+        ],
+        [
+          {
+            "key": "²",
+            "size": "BASIC"
+          },
+          {
+            "key": "&",
+            "size": "BASIC"
+          },
+          {
+            "key": "É",
+            "size": "BASIC"
+          },
+          {
+            "key": "\"",
+            "size": "BASIC"
+          },
+          {
+            "key": "'",
+            "size": "BASIC"
+          },
+          {
+            "key": "(",
+            "size": "BASIC"
+          },
+          {
+            "key": "-",
+            "size": "BASIC"
+          },
+          {
+            "key": "È",
+            "size": "BASIC"
+          },
+          {
+            "key": "_",
+            "size": "BASIC"
+          },
+          {
+            "key": "Ç",
+            "size": "BASIC"
+          },
+          {
+            "key": "À",
+            "size": "BASIC"
+          },
+          {
+            "key": ")",
+            "size": "BASIC"
+          },
+          {
+            "key": "=",
+            "size": "BASIC"
+          },
+          {
+            "key": "BACKSPACE",
+            "size": "CAPS_LOCK_BACKSPACE"
+          },
+          {
+            "key": "INSERT",
+            "size": "BASIC"
+          },
+          {
+            "key": "HOME",
+            "size": "BASIC"
+          },
+          {
+            "key": "PAGEUP",
+            "size": "BASIC"
+          }
+        ],
+        [
+          {
+            "key": "TAB",
+            "size": "TAB"
+          },
+          {
+            "key": "A",
+            "size": "BASIC"
+          },
+          {
+            "key": "Z",
+            "size": "BASIC"
+          },
+          {
+            "key": "E",
+            "size": "BASIC"
+          },
+          {
+            "key": "R",
+            "size": "BASIC"
+          },
+          {
+            "key": "T",
+            "size": "BASIC"
+          },
+          {
+            "key": "Y",
+            "size": "BASIC"
+          },
+          {
+            "key": "U",
+            "size": "BASIC"
+          },
+          {
+            "key": "I",
+            "size": "BASIC"
+          },
+          {
+            "key": "O",
+            "size": "BASIC"
+          },
+          {
+            "key": "P",
+            "size": "BASIC"
+          },
+          {
+            "key": "^",
+            "size": "BASIC"
+          },
+          {
+            "key": "$",
+            "size": "BASIC"
+          },
+          {
+            "key": "*",
+            "size": "BASIC"
+          },
+          {
+            "key": "DELETE",
+            "size": "BASIC"
+          },
+          {
+            "key": "END",
+            "size": "BASIC"
+          },
+          {
+            "key": "PAGEDOWN",
+            "size": "BASIC"
+          }
+        ],
+        [
+          {
+            "key": "CAPSLOCK",
+            "size": "CAPS_LOCK_BACKSPACE"
+          },
+          {
+            "key": "Q",
+            "size": "BASIC"
+          },
+          {
+            "key": "S",
+            "size": "BASIC"
+          },
+          {
+            "key": "D",
+            "size": "BASIC"
+          },
+          {
+            "key": "F",
+            "size": "BASIC"
+          },
+          {
+            "key": "G",
+            "size": "BASIC"
+          },
+          {
+            "key": "H",
+            "size": "BASIC"
+          },
+          {
+            "key": "J",
+            "size": "BASIC"
+          },
+          {
+            "key": "K",
+            "size": "BASIC"
+          },
+          {
+            "key": "L",
+            "size": "BASIC"
+          },
+          {
+            "key": "M",
+            "size": "BASIC"
+          },
+          {
+            "key": "%",
+            "size": "BASIC"
+          },
+          {
+            "key": "ENTER",
+            "size": "LEFT_SHIFT_ENTER_NUMPAD_0"
+          }
+        ],
+        [
+          {
+            "key": "LSHIFT",
+            "size": "LEFT_SHIFT_ENTER_NUMPAD_0"
+          },
+          {
+            "key": "W",
+            "size": "BASIC"
+          },
+          {
+            "key": "X",
+            "size": "BASIC"
+          },
+          {
+            "key": "C",
+            "size": "BASIC"
+          },
+          {
+            "key": "V",
+            "size": "BASIC"
+          },
+          {
+            "key": "B",
+            "size": "BASIC"
+          },
+          {
+            "key": "N",
+            "size": "BASIC"
+          },
+          {
+            "key": ",",
+            "size": "BASIC"
+          },
+          {
+            "key": ";",
+            "size": "BASIC"
+          },
+          {
+            "key": ":",
+            "size": "BASIC"
+          },
+          {
+            "key": "!",
+            "size": "BASIC"
+          },
+          {
+            "key": "RSHIFT",
+            "size": "RIGHT_SHIFT"
+          },
+          {
+            "key": "UP",
+            "size": "BASIC"
+          }
+        ],
+        [
+          {
+            "key": "LCTRL",
+            "size": "BASIC"
+          },
+          {
+            "key": "LWIN",
+            "size": "BASIC"
+          },
+          {
+            "key": "LALT",
+            "size": "BASIC"
+          },
+          {
+            "key": "SPACE",
+            "size": "SPACE"
+          },
+          {
+            "key": "RALT",
+            "size": "BASIC"
+          },
+          {
+            "key": "RWIN",
+            "size": "BASIC"
+          },
+          {
+            "key": "MENU",
+            "size": "BASIC"
+          },
+          {
+            "key": "RCTRL",
+            "size": "BASIC"
+          },
+          {
+            "key": "LEFT",
+            "size": "BASIC"
+          },
+          {
+            "key": "DOWN",
+            "size": "BASIC"
+          },
+          {
+            "key": "RIGHT",
+            "size": "BASIC"
+          }
+        ]
+      ]
+    },
+    {
+      "type" : "AZERTY",
+      "size": "FULL",
+      "layout": [
+        [
+          {
+            "key": "ESC",
+            "size": "BASIC"
+          },
+          {
+            "key": "F1",
+            "size": "BASIC"
+          },
+          {
+            "key": "F2",
+            "size": "BASIC"
+          },
+          {
+            "key": "F3",
+            "size": "BASIC"
+          },
+          {
+            "key": "F4",
+            "size": "BASIC"
+          },
+          {
+            "key": "F5",
+            "size": "BASIC"
+          },
+          {
+            "key": "F6",
+            "size": "BASIC"
+          },
+          {
+            "key": "F7",
+            "size": "BASIC"
+          },
+          {
+            "key": "F8",
+            "size": "BASIC"
+          },
+          {
+            "key": "F9",
+            "size": "BASIC"
+          },
+          {
+            "key": "F10",
+            "size": "BASIC"
+          },
+          {
+            "key": "F11",
+            "size": "BASIC"
+          },
+          {
+            "key": "F12",
+            "size": "BASIC"
+          },
+          {
+            "key": "PRTSC",
+            "size": "BASIC"
+          },
+          {
+            "key": "SCRLK",
+            "size": "BASIC"
+          },
+          {
+            "key": "PAUSE",
+            "size": "BASIC"
+          }
+        ],
+        [
+          {
+            "key": "²",
+            "size": "BASIC"
+          },
+          {
+            "key": "&",
+            "size": "BASIC"
+          },
+          {
+            "key": "É",
+            "size": "BASIC"
+          },
+          {
+            "key": "\"",
+            "size": "BASIC"
+          },
+          {
+            "key": "'",
+            "size": "BASIC"
+          },
+          {
+            "key": "(",
+            "size": "BASIC"
+          },
+          {
+            "key": "-",
+            "size": "BASIC"
+          },
+          {
+            "key": "È",
+            "size": "BASIC"
+          },
+          {
+            "key": "_",
+            "size": "BASIC"
+          },
+          {
+            "key": "Ç",
+            "size": "BASIC"
+          },
+          {
+            "key": "À",
+            "size": "BASIC"
+          },
+          {
+            "key": ")",
+            "size": "BASIC"
+          },
+          {
+            "key": "=",
+            "size": "BASIC"
+          },
+          {
+            "key": "BACKSPACE",
+            "size": "CAPS_LOCK_BACKSPACE"
+          },
+          {
+            "key": "INSERT",
+            "size": "BASIC"
+          },
+          {
+            "key": "HOME",
+            "size": "BASIC"
+          },
+          {
+            "key": "PAGEUP",
+            "size": "BASIC"
+          },
+          {
+            "key": "NUMLK",
+            "size": "BASIC"
+          },
+          {
+            "key": "/",
+            "size": "BASIC"
+          },
+          {
+            "key": "*",
+            "size": "BASIC"
+          },
+          {
+            "key": "-",
+            "size": "BASIC"
+          }
+        ],
+        [
+          {
+            "key": "TAB",
+            "size": "TAB"
+          },
+          {
+            "key": "A",
+            "size": "BASIC"
+          },
+          {
+            "key": "Z",
+            "size": "BASIC"
+          },
+          {
+            "key": "E",
+            "size": "BASIC"
+          },
+          {
+            "key": "R",
+            "size": "BASIC"
+          },
+          {
+            "key": "T",
+            "size": "BASIC"
+          },
+          {
+            "key": "Y",
+            "size": "BASIC"
+          },
+          {
+            "key": "U",
+            "size": "BASIC"
+          },
+          {
+            "key": "I",
+            "size": "BASIC"
+          },
+          {
+            "key": "O",
+            "size": "BASIC"
+          },
+          {
+            "key": "P",
+            "size": "BASIC"
+          },
+          {
+            "key": "^",
+            "size": "BASIC"
+          },
+          {
+            "key": "$",
+            "size": "BASIC"
+          },
+          {
+            "key": "*",
+            "size": "BASIC"
+          },
+          {
+            "key": "DELETE",
+            "size": "BASIC"
+          },
+          {
+            "key": "END",
+            "size": "BASIC"
+          },
+          {
+            "key": "PAGEDOWN",
+            "size": "BASIC"
+          },
+          {
+            "key": "7",
+            "size": "BASIC"
+          },
+          {
+            "key": "8",
+            "size": "BASIC"
+          },
+          {
+            "key": "9",
+            "size": "BASIC"
+          },
+          {
+            "key": "+",
+            "size": "LEFT_SHIFT_ENTER_NUMPAD_0"
+          }
+        ],
+        [
+          {
+            "key": "CAPSLOCK",
+            "size": "CAPS_LOCK_BACKSPACE"
+          },
+          {
+            "key": "Q",
+            "size": "BASIC"
+          },
+          {
+            "key": "S",
+            "size": "BASIC"
+          },
+          {
+            "key": "D",
+            "size": "BASIC"
+          },
+          {
+            "key": "F",
+            "size": "BASIC"
+          },
+          {
+            "key": "G",
+            "size": "BASIC"
+          },
+          {
+            "key": "H",
+            "size": "BASIC"
+          },
+          {
+            "key": "J",
+            "size": "BASIC"
+          },
+          {
+            "key": "K",
+            "size": "BASIC"
+          },
+          {
+            "key": "L",
+            "size": "BASIC"
+          },
+          {
+            "key": "M",
+            "size": "BASIC"
+          },
+          {
+            "key": "%",
+            "size": "BASIC"
+          },
+          {
+            "key": "ENTER",
+            "size": "LEFT_SHIFT_ENTER_NUMPAD_0"
+          },
+          {
+            "key": "",
+            "size": ""
+          },
+          {
+            "key": "4",
+            "size": "BASIC"
+          },
+          {
+            "key": "5",
+            "size": "BASIC"
+          },
+          {
+            "key": "6",
+            "size": "BASIC"
+          }
+        ],
+        [
+          {
+            "key": "LSHIFT",
+            "size": "LEFT_SHIFT_ENTER_NUMPAD_0"
+          },
+          {
+            "key": "W",
+            "size": "BASIC"
+          },
+          {
+            "key": "X",
+            "size": "BASIC"
+          },
+          {
+            "key": "C",
+            "size": "BASIC"
+          },
+          {
+            "key": "V",
+            "size": "BASIC"
+          },
+          {
+            "key": "B",
+            "size": "BASIC"
+          },
+          {
+            "key": "N",
+            "size": "BASIC"
+          },
+          {
+            "key": ",",
+            "size": "BASIC"
+          },
+          {
+            "key": ";",
+            "size": "BASIC"
+          },
+          {
+            "key": ":",
+            "size": "BASIC"
+          },
+          {
+            "key": "!",
+            "size": "BASIC"
+          },
+          {
+            "key": "RSHIFT",
+            "size": "RIGHT_SHIFT"
+          },
+          {
+            "key": "UP",
+            "size": "BASIC"
+          },
+          {
+            "key": "1",
+            "size": "BASIC"
+          },
+          {
+            "key": "2",
+            "size": "BASIC"
+          },
+          {
+            "key": "3",
+            "size": "BASIC"
+          },
+          {
+            "key": "ENTER",
+            "size": "LEFT_SHIFT_ENTER_NUMPAD_0"
+          }
+        ],
+        [
+          {
+            "key": "LCTRL",
+            "size": "BASIC"
+          },
+          {
+            "key": "LWIN",
+            "size": "BASIC"
+          },
+          {
+            "key": "LALT",
+            "size": "BASIC"
+          },
+          {
+            "key": "SPACE",
+            "size": "SPACE"
+          },
+          {
+            "key": "RALT",
+            "size": "BASIC"
+          },
+          {
+            "key": "RWIN",
+            "size": "BASIC"
+          },
+          {
+            "key": "MENU",
+            "size": "BASIC"
+          },
+          {
+            "key": "RCTRL",
+            "size": "BASIC"
+          },
+          {
+            "key": "LEFT",
+            "size": "BASIC"
+          },
+          {
+            "key": "DOWN",
+            "size": "BASIC"
+          },
+          {
+            "key": "RIGHT",
+            "size": "BASIC"
+          },
+          {
+            "key": "0",
+            "size": "BASIC"
+          },
+          {
+            "key": ".",
+            "size": "BASIC"
+          }
+        ]
+      ]
     }
   ]
 }
