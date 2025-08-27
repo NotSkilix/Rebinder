@@ -4,11 +4,7 @@ import json
 from PySide6 import QtWidgets, QtCore
 
 from src.script.key import Key
-from src.types.type_def import KeyStatus, KeyStyle, KeySize, KEYBOARD_LAYOUT_PATH
-
-KEYBOARD_TYPE = "QWERTY"
-KEYBOARD_SIZE = "FULL"
-KEYBOARD_LIST_NAME = "keyboards"
+from src.types.type_def import KeyStatus, KeyStyle, KeySize, KEYBOARD_LAYOUT_PATH, KEYBOARD_LIST_NAME
 
 class KeyboardManager(QtWidgets.QGridLayout):
     """

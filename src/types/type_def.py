@@ -10,6 +10,20 @@ Path to the JSON file containing keyboard layouts.
 """
 KEYBOARD_LAYOUT_PATH = "src/data/keyboard_layouts.json"
 
+"""
+Name of the list containing keyboard layouts in the JSON file.
+"""
+KEYBOARD_LIST_NAME = "keyboards"
+
+"""
+Interval (in milliseconds) for updating the keyboard layout.
+Currently set to 60000 (1m)
+"""
+KEYBOARD_LAYOUT_SIZE_UPDATE = 60000
+
+"""
+Enumeration for the types of pop-up messages.
+"""
 class PopupTypes(Enum):
     ERROR = 1
     INFO = 2
@@ -81,6 +95,9 @@ class KeyStyle(Enum):
                 background-color: #D5681A
               """
 
+"""
+Enumeration for the sizes of different types of keys on the keyboard.
+"""
 class KeySize(Enum):
     BASIC = QtCore.QSize(55, 55)  # Esc, F1, A, etc.
     TAB = QtCore.QSize(87, 41)  # Tab
